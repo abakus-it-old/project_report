@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+        <record model="ir.ui.view" id="edit_project_report">
+           <field name="name">edit_project_report</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="arch" type="xml">
+                <page string="Project Stages" position="after">
+                    <page string="Project Report 2">
+                        <!--<field name="contract_report_info"/>-->
+                        <!--
+                        <button name='percent(contract_report.action_contract_report_wizard)d' type='action' string='Change settings'/>
+
+                        <button name="action_service_report_sent" type="object" string="Send by Email"/>
+                        -->
+                        <button name="print_report" type="object" string="Print"/>
+                    </page>
+                </page>
+            </field>
+        </record>
+    </data>
+</openerp>
