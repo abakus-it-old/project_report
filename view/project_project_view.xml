@@ -7,13 +7,7 @@
             <field name="inherit_id" ref="project.edit_project"/>
             <field name="arch" type="xml">
                 <page string="Project Stages" position="after">
-                    <page string="Project Report 2">
-                        <!--<field name="contract_report_info"/>-->
-                        <!--
-                        <button name='percent(contract_report.action_contract_report_wizard)d' type='action' string='Change settings'/>
-
-                        <button name="action_service_report_sent" type="object" string="Send by Email"/>
-                        -->
+                    <page string="Project Report">
                         <button name="print_report" type="object" string="Print"/>
                     </page>
                 </page>
@@ -21,3 +15,6 @@
         </record>
     </data>
 </openerp>
+
+
+

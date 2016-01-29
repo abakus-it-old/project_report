@@ -1,7 +1,8 @@
 from openerp import models, fields, api, _
-import datetime
-from datetime import date
-import pytz
+
+import logging
+_logger = logging.getLogger(__name__)
+
 
 class project_project_report_methods(models.Model):
     _inherit = ['project.project']
@@ -21,3 +22,29 @@ class project_project_report_methods(models.Model):
             'domain': '',
             'context': {'project_ids': ids,}
         }
+
+    def __get_project_report(self):
+        cr = self.env.cr
+        uid = self.env.user.id
+        project_report_obj = self.pool.get('project.report')
+        project_report_id = project_report_obj.search(cr, uid, [('id','=',1)])
+        if project_report_id:
+            return project_report_obj.browse(cr, uid, project_report_id[0])
+        raise Exception('Project.report doesn\'t exists')
+
+    def display_issues(self):
+        return self.__get_project_report().issues
+    def issues_type(self):
+        return self.__get_project_report().issues_type
+    def display_tasks(self):
+        return self.__get_project_report().tasks
+    def tasks_type(self):
+        return self.__get_project_report().tasks_type
+    def get_comments(self):
+        return self.__get_project_report().comments
+    def display_project_times(self):
+        return self.__get_project_report().project_times
+    def display_project_info(self):
+        return self.__get_project_report().project_info
+    def display_charts(self):
+        return self.__get_project_report().show_chart

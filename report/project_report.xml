@@ -13,9 +13,48 @@
 		/>
 
         <template id="report_project_document">
-            <t t-name="contract_report.report_contract_document">
+            <t t-name="project_report.report_project_document">
                 <t t-call="report.external_layout">
-                    <div>TEST</div>
+                    <div class="page">
+                        <h1 class="text-center">Project report <span t-field="o.name"/></h1>
+                        <div>
+                            <p>
+                                Project name: <span t-field="o.name"/><br/>
+                                Customer : <span t-field="o.partner_id.name"/>
+                                <address t-field="o.partner_id" t-field-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;], &quot;no_marker&quot;: true}"/>
+                            </p>
+                        </div>
+                        <t t-if="o.display_project_info()">
+                            <h2>Project Infos</h2>
+                        </t>
+                        <t t-if="o.display_project_times()">
+                            <h2>Project times</h2>
+                        </t>
+                        <h2>Report Info</h2>
+                        <t t-if="o.display_charts()">
+                            <h2>Charts</h2>
+                        </t>
+
+                        <t t-if="o.display_tasks()">
+                            <h2>Tasks</h2>
+                            <t t-if="o.tasks_type() == 'summary'">
+                                <h3>Summary</h3>
+                            </t>
+                            <t t-if="o.tasks_type() == 'detailled'">
+                                <h3>Detailled</h3>
+                            </t>
+                        </t>
+                        <t t-if="o.display_issues()">
+                            <h2>Tasks</h2>
+                            <t t-if="o.issues_type() == 'summary'">
+                                <h3>Summary</h3>
+                            </t>
+                            <t t-if="o.issues_type() == 'detailled'">
+                                <h3>Detailled</h3>
+                            </t>
+                        </t>
+
+                    </div>
                 </t>
             </t>
         </template>

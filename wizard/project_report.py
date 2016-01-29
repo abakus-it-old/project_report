@@ -17,14 +17,12 @@ class project_report(models.Model):
     show_chart = fields.Boolean(string="Show Chart")
 
     tasks = fields.Boolean(string="Tasks")
-    tasks_summary = fields.Boolean(string="Summary")
-    tasks_detailed = fields.Boolean(string="Detailed")
+    tasks_type = fields.Selection([('summary','Summary'),('detailled', 'Detailled')], string='Task type')
     tasks_order = fields.Selection(['All','all'], string="Order by")
     tasks_stage = fields.Selection([("All", "all"), ("Open", "open"), ("Done & Cancelled", "closed")], string="Stages")
 
     issues = fields.Boolean(string="Issues")
-    issues_summary = fields.Boolean(string="Summary")
-    issues_detailed = fields.Boolean(string="Detailed")
+    issues_type = fields.Selection([('summary','Summary'),('detailled', 'Detailled')], string='Issue type')
     issues_order = fields.Selection(['All','all'], string="Order by")
     issues_stage = fields.Selection([("All", "all"), ("Open", "open"), ("Done & Cancelled", "closed")], string="Stages")
 
@@ -59,7 +57,25 @@ class project_report_wizard(osv.osv_memory):
         project_report_obj = self.pool.get('project.report')
         #contract.report with id 1 is created in project_report.xml as record
         project_report_obj.write(cr,uid,1,{'start_date' : project_report_wizard.start_date,
-                                            'end_date':project_report_wizard.end_date})
+                                            'end_date':project_report_wizard.end_date,
+
+                                            'project_info':project_report_wizard.project_info,
+                                            'project_times':project_report_wizard.project_times,
+                                            'date_application_creation':project_report_wizard.date_application_creation,
+                                            'date_application_modified':project_report_wizard.date_application_modified,
+                                            'date_application_closed':project_report_wizard.date_application_closed,
+
+                                            'show_chart':project_report_wizard.show_chart,
+                                            'tasks':project_report_wizard.tasks,
+                                            'tasks_order':project_report_wizard.tasks_order,
+                                            'tasks_stage':project_report_wizard.tasks_stage,
+                                            'tasks_type':project_report_wizard.tasks_type,
+                                            'issues':project_report_wizard.issues,
+                                            'issues_order':project_report_wizard.issues_order,
+                                            'issues_stage':project_report_wizard.issues_stage,
+                                            'issues_type':project_report_wizard.issues_type,
+                                            'comments':project_report_wizard.comments
+                                           })
         return {
                 'type': 'ir.actions.act_window_close',
                }

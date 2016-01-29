@@ -11,7 +11,7 @@
     """,
     'data': [
         'wizard/project_report_view.xml',
-        'view/account_analytic_account_view.xml',
+        'view/project_project_view.xml',
         'project_report_data.xml',
         'report/project_report.xml',
     ],
