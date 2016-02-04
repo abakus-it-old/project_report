@@ -1,5 +1,5 @@
 from openerp import models, fields, api, _
-
+from datetime import datetime
 import logging
 _logger = logging.getLogger(__name__)
 
@@ -10,13 +10,14 @@ class project_project_report_methods(models.Model):
 
     def print_report(self, cr, uid, ids, context=None):
         dummy, view_id = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'project_report', 'view_project_report_wizard_print')
-        self.pool.get('project.report.wizard').reset_stats(cr, uid)
+        #self.pool.get('project.report.wizard').reset_stats(cr, uid)
         return {
             'name':_("Print Service Report"),
             'view_mode': 'form',
             'view_id': view_id,
             'view_type': 'form',
             'res_model': 'project.report.wizard',
+            'res_id': 1,
             'type': 'ir.actions.act_window',
             'target': 'new',
             'domain': '',
@@ -48,3 +49,7 @@ class project_project_report_methods(models.Model):
         return self.__get_project_report().project_info
     def display_charts(self):
         return self.__get_project_report().show_chart
+    def startdate(self):
+        return self.__get_project_report().start_date
+    def enddate(self):
+        return self.__get_project_report().end_date
