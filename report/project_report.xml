@@ -81,7 +81,7 @@
                         <table class="table">
                             <tr>
                                 <td>Report creation date</td>
-                                <td><span t-esc="time.strftime('%d-%m-%Y')"/></td>
+                                <td colspan="3"><span t-esc="time.strftime('%d-%m-%Y')"/></td>
                             </tr>
                             <tr>
                                 <td>Selected start date</td>
@@ -100,6 +100,15 @@
                         </table>
                         <t t-if="o.display_charts()">
                             <h2>Charts</h2>
+
+
+
+                                <td class="text-center" style="vertical-align: middle;">
+                                    <h3>Priority</h3>
+                                </td>
+
+
+
                         </t>
 
                         <t t-if="o.display_tasks()">
@@ -224,7 +233,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <t t-foreach="o.issue_ids" t-as="i">
+                                        <t t-foreach="o.get_issues_for_report()" t-as="i">
                                             <tr>
                                                 <td><t t-esc="i.stage_id.name"/></td>
                                                 <td><t t-esc="i.name"/></td>
@@ -324,6 +333,9 @@
                                 </table>
                             </t>
                         </t>
+
+                        <h2>Comment</h2>
+                        <p><t t-esc="o.get_comments()"/> </p>
 
                     </div>
                 </t>
