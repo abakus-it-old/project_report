@@ -126,7 +126,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <t t-foreach="o.tasks" t-as="t">
+                                        <t t-foreach="o.get_tasks_for_report()" t-as="t">
                                             <tr>
                                                 <td><t t-esc="t.stage_id.name"/></td>
                                                 <td><t t-esc="t.name"/></td>
@@ -141,7 +141,7 @@
                             </t>
                             <t t-if="o.tasks_type() == 'detailled'">
                                 <h3>Detailled</h3>
-                                <t t-foreach="o.tasks" t-as="t">
+                                <t t-foreach="o.get_tasks_for_report()" t-as="t">
                                     <table class="table">
                                         <tr>
                                             <td>Task name</td>
@@ -254,7 +254,7 @@
                                 <h3>Detailled</h3>
 
                                 <table class="table">
-                                    <t t-foreach="o.issue_ids" t-as="i">
+                                    <t t-foreach="o.get_issues_for_report()" t-as="i">
                                         <tr>
                                             <td>Issue name</td>
                                             <td colspan="2"><t t-esc="i.name"/> </td>
