@@ -8,6 +8,15 @@ class project_project_report_methods(models.Model):
     _inherit = ['project.project']
 
 
+    issue_per_stage = fields.Char(compute='_compute_issue_per_stage',string="Issue per stage", store=False)
+    issue_per_tag = fields.Char(compute='_compute_issue_per_tag',string="Issue per tag", store=False)
+    issue_per_priority = fields.Char(compute='_compute_issue_per_priority',string="Issue per priority", store=False)
+
+    task_per_stage = fields.Char(compute='_compute_task_per_stage',string="Task per stage", store=False)
+    task_per_tag = fields.Char(compute='_compute_task_per_tag',string="Task per tag", store=False)
+    task_per_priority = fields.Char(compute='_compute_task_per_priority',string="Task per priority", store=False)
+
+
     def print_report(self, cr, uid, ids, context=None):
         dummy, view_id = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'project_report', 'view_project_report_wizard_print')
         #self.pool.get('project.report.wizard').reset_stats(cr, uid)
@@ -170,3 +179,137 @@ class project_project_report_methods(models.Model):
         _logger.debug('Tasks : ')
         _logger.debug(project_tasks)
         return project_tasks
+
+    # copied from sla module
+    def _dictionary_to_pie_chart_url(self, dict, colors=False):
+        url = "/report/chart/pie?"
+        if dict:
+            labels = "labels="
+            sizes = "sizes="
+            keys = dict.keys()
+            last = len(keys)-1
+            count=0
+            for name in keys:
+                if count == last:
+                    labels += str(name)
+                    sizes += str(dict[name])
+                else:
+                    labels += str(name)+','
+                    sizes += str(dict[name])+','
+                count+=1
+            url = url+labels+"&"+sizes
+            if colors:
+                color_string = ""
+                last = len(colors)-1
+                count=0
+                for color in colors:
+                    if count == last:
+                        color_string += color
+                    else:
+                        color_string += color +','
+                url += "&colors="+color_string
+        return url
+
+    def _issue_per_stage(self):
+        stage_dict = {}
+        project_issues = self.get_issues_for_report()
+        if project_issues:
+            for issue in project_issues:
+                if issue.stage_id:
+                    user_name = issue.stage_id.name
+                    if stage_dict.has_key(user_name):
+                        stage_dict[user_name] += 1
+                    else:
+                        stage_dict[user_name] = 1
+        return stage_dict
+    @api.one
+    def _compute_issue_per_stage(self):
+        dict = self._issue_per_stage()
+        self.issue_per_stage = self._dictionary_to_pie_chart_url(dict)
+
+    def _issue_per_tag(self):
+        stage_dict = {}
+        project_issues = self.get_issues_for_report()
+        if project_issues:
+            for issue in project_issues:
+                for tag in  issue.categ_ids:
+                    tag_name = tag.name
+                    if stage_dict.has_key(tag_name):
+                        stage_dict[tag_name] += 1
+                    else:
+                        stage_dict[tag_name] = 1
+        return stage_dict
+    @api.one
+    def _compute_issue_per_tag(self):
+        dict = self._issue_per_tag()
+        self.issue_per_tag = self._dictionary_to_pie_chart_url(dict)
+
+    def _issue_per_priority(self):
+        stage_dict = {}
+        project_issues = self.get_issues_for_report()
+        if project_issues:
+            for issue in project_issues:
+                if issue.priority:
+                    user_name = issue.priority
+                    if stage_dict.has_key(user_name):
+                        stage_dict[user_name] += 1
+                    else:
+                        stage_dict[user_name] = 1
+        return stage_dict
+    @api.one
+    def _compute_issue_per_priority(self):
+        dict = self._issue_per_priority()
+        self.issue_per_priority = self._dictionary_to_pie_chart_url(dict)
+
+
+    # TASKS CHART
+    def _task_per_stage(self):
+        stage_dict = {}
+        project_issues = self.get_tasks_for_report()
+        if project_issues:
+            for issue in project_issues:
+                if issue.stage_id:
+                    user_name = issue.stage_id.name
+                    if stage_dict.has_key(user_name):
+                        stage_dict[user_name] += 1
+                    else:
+                        stage_dict[user_name] = 1
+        return stage_dict
+    @api.one
+    def _compute_task_per_stage(self):
+        dict = self._task_per_stage()
+        self.task_per_stage = self._dictionary_to_pie_chart_url(dict)
+
+    def _task_per_tag(self):
+        stage_dict = {}
+        project_issues = self.get_tasks_for_report()
+        if project_issues:
+            for issue in project_issues:
+                for tag in  issue.categ_ids:
+                    tag_name = tag.name
+                    if stage_dict.has_key(tag_name):
+                        stage_dict[tag_name] += 1
+                    else:
+                        stage_dict[tag_name] = 1
+        return stage_dict
+    @api.one
+    def _compute_task_per_tag(self):
+        dict = self._task_per_tag()
+        self.task_per_tag = self._dictionary_to_pie_chart_url(dict)
+
+    def _task_per_priority(self):
+        stage_dict = {}
+        project_issues = self.get_tasks_for_report()
+        if project_issues:
+            for issue in project_issues:
+                if issue.priority:
+                    user_name = issue.priority
+                    if stage_dict.has_key(user_name):
+                        stage_dict[user_name] += 1
+                    else:
+                        stage_dict[user_name] = 1
+        return stage_dict
+    @api.one
+    def _compute_task_per_priority(self):
+        dict = self._task_per_priority()
+        self.task_per_priority = self._dictionary_to_pie_chart_url(dict)

@@ -17,7 +17,7 @@ class project_report(models.Model):
     show_chart = fields.Boolean(string="Show Chart")
 
     tasks = fields.Boolean(string="Tasks")
-    tasks_type = fields.Selection([('summary','Summary'),('detailled', 'Detailled')], string='Task type')
+    tasks_type = fields.Selection([('summary','Summary'),('detailled', 'Detailled')], string='Task type', default='summary')
     tasks_order = fields.Selection(['All','all'], string="Order by")
     tasks_stage = fields.Selection([("all", "All"), ("open", "Open"), ("closed", "Done & Cancelled")], string="Stages")
     issues = fields.Boolean(string="Issues")

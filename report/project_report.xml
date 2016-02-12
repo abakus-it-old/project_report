@@ -62,12 +62,12 @@
                             <table class="table">
                                 <tr>
                                     <td>Planned time</td>
-                                    <td></td>
+                                    <td><t t-esc="float(o.planned_hours/8)"/> days*</td>
                                     <td><t t-esc="float(o.planned_hours)"/> hours</td>
                                 </tr>
                                 <tr>
                                     <td>Spent time</td>
-                                    <td></td>
+                                    <td><t t-esc="float(o.effective_hours/8)"/> days*</td>
                                     <td><t t-esc="float(o.effective_hours)"/> hours</td>
                                 </tr>
                                 <tr>
@@ -76,6 +76,7 @@
                                     <td></td>
                                 </tr>
                             </table>
+                            <p>(*) One day is 8 hours long.</p>
                         </t>
                         <h2>Report Info</h2>
                         <table class="table">
@@ -99,19 +100,47 @@
                             </tr>
                         </table>
                         <t t-if="o.display_charts()">
+                            <p style="page-break-before:always;"> </p>
                             <h2>Charts</h2>
 
-
-
-                                <td class="text-center" style="vertical-align: middle;">
-                                    <h3>Priority</h3>
-                                </td>
-
-
-
+                            <table>
+                                <tr>
+                                    <td class="text-center" style="vertical-align: middle;">
+                                        <h3>Task per stage</h3>
+                                        <img t-att-src="o.task_per_stage" style="max-height:200px;"/>
+                                    </td>
+                                    <td class="text-center" style="vertical-align: middle;">
+                                        <h3>Issue per stage</h3>
+                                        <img t-att-src="o.issue_per_stage" style="max-height:200px;"/>
+                                    </td>
+                                </tr>
+                                <!--
+                                <tr>
+                                    <td class="text-center" style="vertical-align: middle;">
+                                        <h3>Task per tag</h3>
+                                        <img t-att-src="o.task_per_tag" style="max-height:200px;"/>
+                                    </td>
+                                    <td class="text-center" style="vertical-align: middle;">
+                                        <h3>Issue per tag</h3>
+                                        <img t-att-src="o.issue_per_tag" style="max-height:200px;"/>
+                                    </td>
+                                </tr>
+                                -->
+                                <tr>
+                                    <td class="text-center" style="vertical-align: middle;">
+                                        <h3>Task per Priority</h3>
+                                        <img t-att-src="o.task_per_priority" style="max-height:200px;"/>
+                                    </td>
+                                    <td class="text-center" style="vertical-align: middle;">
+                                        <h3>Issue per priority</h3>
+                                        <img t-att-src="o.issue_per_priority" style="max-height:200px;"/>
+                                    </td>
+                                </tr>
+                            </table>
                         </t>
 
                         <t t-if="o.display_tasks()">
+                            <p style="page-break-before:always;"> </p>
                             <h2>Tasks</h2>
                             <t t-if="o.tasks_type() == 'summary'">
                                 <h3>Summary</h3>
@@ -214,10 +243,12 @@
                                             </tr>
                                         </t>
                                     </table>
+                                    <hr/>
                                 </t>
                             </t>
                         </t>
                         <t t-if="o.display_issues()">
+                            <p style="page-break-before:always;"> </p>
                             <h2>Issues</h2>
                             <t t-if="o.issues_type() == 'summary'">
                                 <h3>Summary</h3>
@@ -331,6 +362,7 @@
                                         </tr>
                                     </t>
                                 </table>
+                                <hr/>
                             </t>
                         </t>
 

@@ -51,7 +51,7 @@
                             </group>
                         </page>
                     </notebook>
-
+                    <label string="Comments"/>
                     <field name="comments"/>
 
 
