@@ -18,5 +18,6 @@ This module has been developed by Quentin TAWRY @ AbAKUS it-solutions
         'view/project_project_view.xml',
         'project_report_data.xml',
         'report/project_report.xml',
+        'security/ir.model.access.csv',
     ],
 }
