@@ -7,7 +7,11 @@
     'category': 'project',
     'description': 
     """
-    A module to generate report based on tasks and issue for a specific contract
+This modules adds a report and wizard on projects in order to print a beautiful report containing all information an data for this project.
+
+It is possible to see Issues, Tasks (summarized or fully detailed) as well as charts for some inf.
+
+This module has been developed by Quentin TAWRY @ AbAKUS it-solutions
     """,
     'data': [
         'wizard/project_report_view.xml',
