@@ -18,11 +18,11 @@ class project_report(models.Model):
 
     tasks = fields.Boolean(string="Tasks")
     tasks_type = fields.Selection([('summary','Summary'),('detailled', 'Detailled')], string='Task type', default='summary')
-    tasks_order = fields.Selection(['All','all'], string="Order by")
+    tasks_order = fields.Selection([('stage_id','Stage'),('name', 'Name')], string="Order by")
     tasks_stage = fields.Selection([("all", "All"), ("open", "Open"), ("closed", "Done & Cancelled")], string="Stages")
     issues = fields.Boolean(string="Issues")
     issues_type = fields.Selection([('summary','Summary'),('detailled', 'Detailled')], string='Issue type')
-    issues_order = fields.Selection(['All','all'], string="Order by")
+    issues_order = fields.Selection([('stage_id','Stage'),('name', 'Name')], string="Order by")
     issues_stage = fields.Selection([("all", "All"), ("open", "Open"), ("closed", "Done & Cancelled")], string="Stages")
 
     comments = fields.Text(string="Comments")
@@ -106,12 +106,12 @@ class project_report_wizard(osv.osv_memory):
 
     tasks = fields.Boolean(string="Tasks")
     tasks_type = fields.Selection([('summary','Summary'),('detailled', 'Detailled')], string='Task type')
-    tasks_order = fields.Selection([('All','all')], string="Order by")
+    tasks_order = fields.Selection([('stage_id','Stage'),('name', 'Name')], string="Order by")
     tasks_stage = fields.Selection([("all", "All"), ("open", "Open"), ("closed", "Done & Cancelled")], string="Stages")
 
     issues = fields.Boolean(string="Issues")
     issues_type = fields.Selection([('summary','Summary'),('detailled', 'Detailled')], string='Issue type')
-    issues_order = fields.Selection([('All','all')], string="Order by")
+    issues_order = fields.Selection([('stage_id','Stage'),('name', 'Name')], string="Order by")
     issues_stage = fields.Selection([("all", "All"), ("open", "Open"), ("closed", "Done & Cancelled")], string="Stages")
 
     comments = fields.Text(string="Comments")

@@ -7,7 +7,7 @@
     'category': 'project',
     'description': 
     """
-    TODO
+    A module to generate report based on tasks and issue for a specific contract
     """,
     'data': [
         'wizard/project_report_view.xml',

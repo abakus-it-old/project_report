@@ -48,6 +48,8 @@ class project_project_report_methods(models.Model):
         return self.__get_project_report().issues_type
     def issues_stage(self):
         return self.__get_project_report().issues_stage
+    def issues_order(self):
+        return self.__get_project_report().issues_order
 
     def display_tasks(self):
         return self.__get_project_report().tasks
@@ -55,6 +57,8 @@ class project_project_report_methods(models.Model):
         return self.__get_project_report().tasks_type
     def tasks_stage(self):
         return self.__get_project_report().tasks_stage
+    def tasks_order(self):
+        return self.__get_project_report().tasks_order
 
     def get_comments(self):
         return self.__get_project_report().comments
@@ -68,9 +72,11 @@ class project_project_report_methods(models.Model):
         return self.__get_project_report().show_chart
 
     def startdate(self):
-        return self.__get_project_report().start_date
+        startdate = self.__get_project_report().start_date if self.__get_project_report().start_date else datetime.now().strftime('%y-%m-%d')
+        return startdate
     def enddate(self):
-        return self.__get_project_report().end_date
+        end_date = self.__get_project_report().end_date if self.__get_project_report().end_date else datetime.now().strftime('%y-%m-%d')
+        return end_date
 
 
     def date_application_creation(self):
@@ -81,10 +87,10 @@ class project_project_report_methods(models.Model):
         return self.__get_project_report().date_application_closed
 
     def get_filter_issues(self):
-        filter = ['&']
+        filter = []
 
-        startdate = self.startdate() if self.startdate() else datetime.now().strftime('%y-%m%d')
-        enddate = self.enddate() if self.enddate() else datetime.now().strftime('%y-%m%d')
+        startdate = self.startdate()# if self.startdate() else datetime.now().strftime('%y-%m%d')
+        enddate = self.enddate()# if self.enddate() else datetime.now().strftime('%y-%m%d')
         created = self.date_application_creation()
         modified = self.date_application_modified()
         closed = self.date_application_closed()
@@ -121,10 +127,10 @@ class project_project_report_methods(models.Model):
         return filter
 
     def get_filter_tasks(self):
-        filter = ['&']
+        filter = []
 
-        startdate = self.startdate() if self.startdate() else datetime.now().strftime('%y-%m%d')
-        enddate = self.enddate() if self.enddate() else datetime.now().strftime('%y-%m%d')
+        startdate = self.startdate()# if self.startdate() else datetime.now().strftime('%y-%m-%d')
+        enddate = self.enddate()# if self.enddate() else datetime.now().strftime('%y-%m%-d')
         created = self.date_application_creation()
         modified = self.date_application_modified()
         closed = self.date_application_closed()
@@ -164,7 +170,7 @@ class project_project_report_methods(models.Model):
     def get_issues_for_report(self):
         cr = self.env.cr
         uid = self.env.user.id
-        project_issues = self.pool.get('project.issue').search(cr, uid, self.get_filter_issues())
+        project_issues = self.pool.get('project.issue').search(cr, uid, self.get_filter_issues(), order=self.issues_order())
         project_issues = self.pool.get('project.issue').browse(cr,uid,project_issues)
         _logger.debug('Issues : ')
         _logger.debug(project_issues)
@@ -174,7 +180,7 @@ class project_project_report_methods(models.Model):
     def get_tasks_for_report(self):
         cr = self.env.cr
         uid = self.env.user.id
-        project_tasks = self.pool.get('project.task').search(cr, uid, self.get_filter_tasks())
+        project_tasks = self.pool.get('project.task').search(cr, uid, self.get_filter_tasks(), order=self.tasks_order())
         project_tasks = self.pool.get('project.task').browse(cr,uid,project_tasks)
         _logger.debug('Tasks : ')
         _logger.debug(project_tasks)
@@ -229,15 +235,20 @@ class project_project_report_methods(models.Model):
 
     def _issue_per_tag(self):
         stage_dict = {}
+        stage_dict['None'] = 0
         project_issues = self.get_issues_for_report()
         if project_issues:
             for issue in project_issues:
-                for tag in  issue.categ_ids:
-                    tag_name = tag.name
-                    if stage_dict.has_key(tag_name):
-                        stage_dict[tag_name] += 1
-                    else:
-                        stage_dict[tag_name] = 1
+                if issue.categ_ids:
+                    for tag in  issue.categ_ids:
+                        tag_name = tag.name
+                        if stage_dict.has_key(tag_name):
+                            stage_dict[tag_name] += 1
+                        else:
+                            stage_dict[tag_name] = 1
+                else:
+                    stage_dict['None'] += 1
+
         return stage_dict
     @api.one
     def _compute_issue_per_tag(self):
@@ -282,15 +293,20 @@ class project_project_report_methods(models.Model):
 
     def _task_per_tag(self):
         stage_dict = {}
+        stage_dict['None'] = 0
+
         project_issues = self.get_tasks_for_report()
         if project_issues:
             for issue in project_issues:
-                for tag in  issue.categ_ids:
-                    tag_name = tag.name
-                    if stage_dict.has_key(tag_name):
-                        stage_dict[tag_name] += 1
-                    else:
-                        stage_dict[tag_name] = 1
+                if issue.categ_ids:
+                    for tag in  issue.categ_ids:
+                        tag_name = tag.name
+                        if stage_dict.has_key(tag_name):
+                            stage_dict[tag_name] += 1
+                        else:
+                            stage_dict[tag_name] = 1
+                else:
+                    stage_dict['None'] += 1
         return stage_dict
     @api.one
     def _compute_task_per_tag(self):

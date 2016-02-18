@@ -114,7 +114,7 @@
                                         <img t-att-src="o.issue_per_stage" style="max-height:200px;"/>
                                     </td>
                                 </tr>
-                                <!--
+
                                 <tr>
                                     <td class="text-center" style="vertical-align: middle;">
                                         <h3>Task per tag</h3>
@@ -125,7 +125,7 @@
                                         <img t-att-src="o.issue_per_tag" style="max-height:200px;"/>
                                     </td>
                                 </tr>
-                                -->
+
                                 <tr>
                                     <td class="text-center" style="vertical-align: middle;">
                                         <h3>Task per Priority</h3>
