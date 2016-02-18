@@ -1,5 +1,5 @@
 ﻿{
-    'name': "AbAKUS Project report",
+    'name': "Project Report",
     'version': '1.2',
     'depends': ['report','project'],
     'author': "Quentin Tawry, AbAKUS it-solutions PGmbH",
