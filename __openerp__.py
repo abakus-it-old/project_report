@@ -2,7 +2,7 @@
     'name': "AbAKUS Project report",
     'version': '1.2',
     'depends': ['report','project'],
-    'author': "Quentin Tawry",
+    'author': "Quentin Tawry, AbAKUS it-solutions PGmbH",
     'website': "http://www.abakusitsolutions.eu",
     'category': 'project',
     'description': 
