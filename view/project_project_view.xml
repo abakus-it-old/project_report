@@ -6,11 +6,11 @@
             <field name="model">project.project</field>
             <field name="inherit_id" ref="project.edit_project"/>
             <field name="arch" type="xml">
-                <page string="Project Stages" position="after">
-                    <page string="Project Report">
-                        <button name="print_report" type="object" string="Print"/>
-                    </page>
-                </page>
+                <group name="group_alias" position="after">
+                    <group string="Project report">
+                        <button name="print_report" type="object" string="Print the Report"/>
+                    </group>
+                </group>
             </field>
         </record>
     </data>
