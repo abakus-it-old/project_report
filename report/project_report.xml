@@ -144,7 +144,7 @@
                             <h2>Tasks</h2>
                             <t t-if="o.tasks_type() == 'summary'">
                                 <h3>Summary</h3>
-                                <table class="table">
+                                <table class="table" style="border-top: 1px solid black; margin-top: 10px; margin-bottom: 10px; border-bottom: 1px solid black;">
                                     <thead>
                                         <tr>
                                             <th>Stage</th>
@@ -171,74 +171,74 @@
                             <t t-if="o.tasks_type() == 'detailled'">
                                 <h3>Detailled</h3>
                                 <t t-foreach="o.get_tasks_for_report()" t-as="t">
-                                    <table class="table">
+                                    <table class="table" style="border-top: 1px double black; margin-top: 10px; margin-bottom: 10px; border-bottom: 1px double black;">
                                         <tr>
-                                            <td>Task name</td>
+                                            <td><b>Task name</b></td>
                                             <td colspan="2"><t t-esc="t.name"/> </td>
-                                            <td>Assigned to</td>
+                                            <td><b>Assigned to</b></td>
                                             <td><t t-esc="t.user_id.partner_id.name"/> </td>
                                         </tr>
                                         <tr>
-                                            <td>Description</td>
+                                            <td><b>Description</b></td>
                                             <td colspan="4"><t t-esc="t.description"/> </td>
                                         </tr>
                                         <tr>
-                                            <td>Stage</td>
+                                            <td><b>Stage</b></td>
                                             <td colspan="2"><t t-esc="t.stage_id.name"/> </td>
-                                            <td>Priority</td>
+                                            <td><b>Priority</b></td>
                                             <td><t t-esc="t.priority"/> </td>
                                         </tr>
                                         <tr>
-                                            <td>Creation date</td>
+                                            <td><b>Creation date</b></td>
                                             <td colspan="2"><t t-esc="t.create_date"/> </td>
-                                            <td>Deadline</td>
+                                            <td><b>Deadline</b></td>
                                             <td><t t-esc="t.date_deadline"/> </td>
                                         </tr>
                                         <tr>
-                                            <td>Planned time</td>
+                                            <td><b>Planned time</b></td>
                                             <td colspan="2"><t t-esc="t.planned_hours"/> </td>
-                                            <td>reviewer</td>
+                                            <td><b>Reviewer</b></td>
                                             <td><t t-esc="t.reviewer_id.partner_id.name"/> </td>
                                         </tr>
                                         <tr>
-                                            <td>Tags</td>
+                                            <td><b>Tags</b></td>
                                             <td colspan="2">
                                                 <t t-foreach="t.categ_ids" t-as="tag">
                                                     <t t-esc="tag.name"/>
                                                 </t>
                                             </td>
-                                            <td>Progress</td>
+                                            <td><b>Progress</b></td>
                                             <td><t t-esc="float(t.progress)"/>% </td>
                                         </tr>
                                         <tr>
-                                            <td>Total worked time</td>
+                                            <td><b>Total worked time</b></td>
                                             <td colspan="2"><t t-esc="float(t.effective_hours)"/> </td>
                                             <td></td>
                                             <td></td>
                                         </tr>
                                         <tr>
                                             <td colspan="5">
-                                                Worklogs
+                                                <b>Worklogs</b>
                                             </td>
                                         </tr>
                                         <t t-foreach="t.work_ids" t-as="w">
                                             <tr>
                                                 <td></td>
-                                                <td>Author</td>
+                                                <td><b>Author</b></td>
                                                 <td><t t-esc="w.user_id.partner_id.name"/> </td>
-                                                <td>Date</td>
+                                                <td><b>Date</b></td>
                                                 <td><t t-esc="w.date"/> </td>
                                             </tr>
                                             <tr>
                                                 <td></td>
-                                                <td>Duration</td>
+                                                <td><b>Duration</b></td>
                                                 <td><t t-esc="w.hours"/> </td>
                                                 <td></td>
                                                 <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
-                                                <td>Description</td>
+                                                <td><b>Description</b></td>
                                                 <td colspan="3"><t t-esc="w.name"/> </td>
                                             </tr>
                                         </t>
@@ -284,85 +284,84 @@
                             <t t-if="o.issues_type() == 'detailled'">
                                 <h3>Detailled</h3>
 
-                                <table class="table">
-                                    <t t-foreach="o.get_issues_for_report()" t-as="i">
+                                <t t-foreach="o.get_issues_for_report()" t-as="i">
+                                    <table class="table" style="border-top: 1px double black; margin-top: 15px; margin-bottom: 15px; border-bottom: 1px double black;">
                                         <tr>
-                                            <td>Issue name</td>
+                                            <td><b>Issue name</b></td>
                                             <td colspan="2"><t t-esc="i.name"/> </td>
-                                            <td>Assigned to</td>
+                                            <td><b>Assigned to</b></td>
                                             <td><t t-esc="i.user_id.partner_id.name"/> </td>
                                         </tr>
                                         <tr>
-                                            <td>Description</td>
+                                            <td><b>Description</b></td>
                                             <td colspan="4"><t t-esc="i.description"/> </td>
                                         </tr>
                                         <tr>
-                                            <td>Contact</td>
+                                            <td><b>Contact</b></td>
                                             <td colspan="2"><t t-esc="i.partner_id.name"/> </td>
-                                            <td>Email</td>
+                                            <td><b>Email</b></td>
                                             <td><t t-esc="i.partner_id.email"/> </td>
                                         </tr>
                                         <tr>
-                                            <td>Stage</td>
+                                            <td><b>Stage</b></td>
                                             <td colspan="2"><t t-esc="i.stage_id.name"/> </td>
-                                            <td>Priority</td>
+                                            <td><b>Priority</b></td>
                                             <td><t t-esc="i.priority"/> </td>
                                         </tr>
                                         <tr>
-                                            <td>Creation date</td>
+                                            <td><b>Creation date</b></td>
                                             <td colspan="2"><t t-esc="i.create_date"/> </td>
-                                            <td>Deadline</td>
+                                            <td><b>Deadline</b></td>
                                             <td><t t-esc="i.date_deadline"/> </td>
                                         </tr>
                                         <tr>
-                                            <td>Tags</td>
+                                            <td><b>Tags</b></td>
                                             <td colspan="2">
                                                 <t t-foreach="i.categ_ids" t-as="tag">
                                                     <t t-esc="tag.name"/>
                                                 </t>
                                             </td>
-                                            <td>Due date</td>
+                                            <td><b>Due date</b></td>
                                             <td><t t-esc="i.due_date"/>% </td>
                                         </tr>
                                         <tr>
-                                            <td>Total worked time</td>
+                                            <td><b>Total worked time</b></td>
                                             <td colspan="2"> </td>
                                             <td></td>
                                             <td></td>
                                         </tr>
                                         <tr>
                                             <td colspan="5">
-                                                Worklogs
+                                                <b>Worklogs</b>
                                             </td>
                                         </tr>
                                         <t t-foreach="i.timesheet_ids" t-as="t">
                                             <tr>
                                                 <td></td>
-                                                <td>Author</td>
+                                                <td><b>Author</b></td>
                                                 <td><t t-esc="t.user_id.partner_id.name"/> </td>
-                                                <td>Date</td>
+                                                <td><b>Date</b></td>
                                                 <td><t t-esc="t.date"/> </td>
                                             </tr>
                                             <tr>
                                                 <td></td>
-                                                <td>Duration</td>
+                                                <td><b>Duration</b></td>
                                                 <td><t t-esc="float(t.unit_amount)"/> </td>
                                                 <td></td>
                                                 <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
-                                                <td>Description</td>
+                                                <td><b>Description</b></td>
                                                 <td colspan="3"><t t-esc="t.name"/> </td>
                                             </tr>
                                         </t>
                                         <tr>
-                                            <td>Customer feedback</td>
+                                            <td><b>Customer feedback</b></td>
                                             <td colspan="4"><t t-esc="i.customer_feedback"/> </td>
                                         </tr>
-                                    </t>
-                                </table>
-                                <hr/>
+                                    </table>
+                                </t>
                             </t>
                         </t>
 
