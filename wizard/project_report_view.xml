@@ -56,8 +56,8 @@
 
 
                     <div style="text-align:right">
-                        <button  icon="gtk-cancel" special="cancel" string="Cancel"/>
-                        <button name="print_report" string="Print" type="object" /> 
+                        <button icon="gtk-cancel" special="cancel" string="Cancel"/>
+                        <button name="action_print_report" string="Print" type="object" /> 
                     </div>
                 </form>
             </field>

@@ -1,11 +1,6 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data>
-        <record id="1" model="project.report">
-        </record>
-    </data>
-    <data>
-        <record id="2" model="project.report.wizard">
-        </record>
+    <data noupdate="1">
+        <record id="1" model="project.report" />
     </data>
 </openerp>

@@ -3,11 +3,11 @@ from datetime import datetime
 import logging
 _logger = logging.getLogger(__name__)
 
-
 class project_project_report_methods(models.Model):
+    # ---- MODEL IINHERIT
     _inherit = ['project.project']
 
-
+    # MODEL FIELDS
     issue_per_stage = fields.Char(compute='_compute_issue_per_stage',string="Issue per stage", store=False)
     issue_per_tag = fields.Char(compute='_compute_issue_per_tag',string="Issue per tag", store=False)
     issue_per_priority = fields.Char(compute='_compute_issue_per_priority',string="Issue per priority", store=False)
@@ -16,8 +16,8 @@ class project_project_report_methods(models.Model):
     task_per_tag = fields.Char(compute='_compute_task_per_tag',string="Task per tag", store=False)
     task_per_priority = fields.Char(compute='_compute_task_per_priority',string="Task per priority", store=False)
 
-
-    def print_report(self, cr, uid, ids, context=None):
+    # ----- ACTION METHODS
+    def action_open_print_report_wizard(self, cr, uid, ids, context=None):
         dummy, view_id = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'project_report', 'view_project_report_wizard_print')
         #self.pool.get('project.report.wizard').reset_stats(cr, uid)
         return {
@@ -33,6 +33,7 @@ class project_project_report_methods(models.Model):
             'context': {'project_ids': ids,}
         }
 
+    # ----- MODEL METHODS
     def __get_project_report(self):
         cr = self.env.cr
         uid = self.env.user.id
@@ -77,7 +78,6 @@ class project_project_report_methods(models.Model):
     def enddate(self):
         end_date = self.__get_project_report().end_date if self.__get_project_report().end_date else datetime.now().strftime('%y-%m-%d')
         return end_date
-
 
     def date_application_creation(self):
         return self.__get_project_report().date_application_creation
@@ -228,6 +228,8 @@ class project_project_report_methods(models.Model):
                     else:
                         stage_dict[user_name] = 1
         return stage_dict
+
+    # ---- FIELDS COMPUTE METHODS
     @api.one
     def _compute_issue_per_stage(self):
         dict = self._issue_per_stage()
@@ -267,6 +269,7 @@ class project_project_report_methods(models.Model):
                     else:
                         stage_dict[user_name] = 1
         return stage_dict
+
     @api.one
     def _compute_issue_per_priority(self):
         dict = self._issue_per_priority()
@@ -286,6 +289,7 @@ class project_project_report_methods(models.Model):
                     else:
                         stage_dict[user_name] = 1
         return stage_dict
+
     @api.one
     def _compute_task_per_stage(self):
         dict = self._task_per_stage()
@@ -308,6 +312,7 @@ class project_project_report_methods(models.Model):
                 else:
                     stage_dict['None'] += 1
         return stage_dict
+
     @api.one
     def _compute_task_per_tag(self):
         dict = self._task_per_tag()
@@ -325,6 +330,7 @@ class project_project_report_methods(models.Model):
                     else:
                         stage_dict[user_name] = 1
         return stage_dict
+
     @api.one
     def _compute_task_per_priority(self):
         dict = self._task_per_priority()

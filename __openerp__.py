@@ -1,4 +1,4 @@
-﻿{
+{
     'name': "Project Report",
     'version': '1.2',
     'depends': ['report','project'],
@@ -14,10 +14,10 @@ It is possible to see Issues, Tasks (summarized or fully detailed) as well as ch
 This module has been developed by Quentin TAWRY @ AbAKUS it-solutions
     """,
     'data': [
-        'wizard/project_report_view.xml',
-        'view/project_project_view.xml',
         'project_report_data.xml',
+        'view/project_project_view.xml',
         'report/project_report.xml',
+        'wizard/project_report_view.xml',
         'security/ir.model.access.csv',
     ],
 }
