@@ -45,9 +45,11 @@
                                 </tr>
                                 <tr>
                                     <td>Team members</td>
-                                    <t t-foreach="o.members" t-as="member">
-                                        <td><span t-esc="member.partner_id.name"/></td>
-                                    </t>
+                                    <td>
+                                        <t t-foreach="o.members" t-as="member">
+                                            <span t-esc="member.partner_id.name"/>, 
+                                        </t>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Project start date</td>
