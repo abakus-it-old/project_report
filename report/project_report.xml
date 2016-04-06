@@ -35,8 +35,8 @@
                                 <tr>
                                     <td>Content</td>
                                     <td ></td>
-                                    <t t-if="o.use_tasks"><td><t t-esc="o.task_count"/> Tasks</td></t>
-                                    <t t-if="o.use_issues"><td><t t-esc="o.issue_count"/> Issues</td></t>
+                                    <t t-if="o.use_tasks"><td><t t-esc="len(o.tasks)"/> Tasks</td></t>
+                                    <t t-if="o.use_issues"><td><t t-esc="len(o.issues)"/> Issues</td></t>
                                 </tr>
                                 <tr>
                                     <td>Project manager</td>
