@@ -16,6 +16,9 @@ class project_project_report_methods(models.Model):
     task_per_tag = fields.Char(compute='_compute_task_per_tag',string="Task per tag", store=False)
     task_per_priority = fields.Char(compute='_compute_task_per_priority',string="Task per priority", store=False)
 
+    # add a field to have issues for project
+    issues = fields.One2many('project.issue', 'project_id')
+
     # ----- ACTION METHODS
     def action_open_print_report_wizard(self, cr, uid, ids, context=None):
         dummy, view_id = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'project_report', 'view_project_report_wizard_print')
