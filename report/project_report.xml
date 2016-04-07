@@ -105,41 +105,62 @@
                                 <td><span t-esc="o.get_user()" /></td>
                             </tr>
                         </table>
-                        <t t-if="o.display_charts()">
+                        <t t-if="o.display_charts() and o.display_tasks()">
                             <p style="page-break-before:always;"> </p>
-                            <h2>Charts</h2>
-
+                            <h2>Task charts</h2>
                             <table>
                                 <tr>
                                     <td class="text-center" style="vertical-align: middle;">
-                                        <h3>Task per stage</h3>
-                                        <img t-att-src="o.task_per_stage" style="max-height:200px;"/>
+                                        <h3>1 - Stage repartition</h3>
+                                        <img t-att-src="o.task_per_stage" style="max-height:300px;"/>
                                     </td>
                                     <td class="text-center" style="vertical-align: middle;">
-                                        <h3>Issue per stage</h3>
-                                        <img t-att-src="o.issue_per_stage" style="max-height:200px;"/>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td class="text-center" style="vertical-align: middle;">
-                                        <h3>Task per tag</h3>
-                                        <img t-att-src="o.task_per_tag" style="max-height:200px;"/>
-                                    </td>
-                                    <td class="text-center" style="vertical-align: middle;">
-                                        <h3>Issue per tag</h3>
-                                        <img t-att-src="o.issue_per_tag" style="max-height:200px;"/>
+                                        <h3>2 - Tags repartition</h3>
+                                        <img t-att-src="o.task_per_tag" style="max-height:300px;"/>
                                     </td>
                                 </tr>
-
                                 <tr>
                                     <td class="text-center" style="vertical-align: middle;">
-                                        <h3>Task per Priority</h3>
-                                        <img t-att-src="o.task_per_priority" style="max-height:200px;"/>
+                                        <h3>3 - Priority repartition</h3>
+                                        <img t-att-src="o.task_per_priority" style="max-height:300px;"/>
+                                    </td>
+                                    <td style="vertical-align: top;">
+                                        <h3>Legend</h3>
+                                        <ol>
+                                            <li>This section presents the proportion of tasks by stage.</li>
+                                            <li>This section presents the proportion of tasks by tags (set by the customer or SM directly in tasks).</li>
+                                            <li>This section presents the proportion of tasks by priority (0, 1 or 2).</li>
+                                        </ol>
+                                    </td>
+                                </tr>
+                            </table>
+                        </t>
+                        <t t-if="o.display_charts() and o.display_issues()">
+                            <p style="page-break-before:always;"> </p>
+                            <h2>Issues charts</h2>
+                            <table>
+                                <tr>
+                                    <td class="text-center" style="vertical-align: middle;">
+                                        <h3>Stage repartition</h3>
+                                        <img t-att-src="o.issue_per_stage" style="max-height:300px;"/>
                                     </td>
                                     <td class="text-center" style="vertical-align: middle;">
-                                        <h3>Issue per priority</h3>
-                                        <img t-att-src="o.issue_per_priority" style="max-height:200px;"/>
+                                        <h3>Tags repartition</h3>
+                                        <img t-att-src="o.issue_per_tag" style="max-height:300px;"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center" style="vertical-align: middle;">
+                                        <h3>Priority repartition</h3>
+                                        <img t-att-src="o.issue_per_priority" style="max-height:300px;"/>
+                                    </td>
+                                    <td style="vertical-align: top;">
+                                        <h3>Legend</h3>
+                                        <ol>
+                                            <li>This section presents the proportion of issues by stage.</li>
+                                            <li>This section presents the proportion of issues by tags (set by the customer or SM directly in issues).</li>
+                                            <li>This section presents the proportion of issues  by priority (0, 1 or 2).</li>
+                                        </ol>
                                     </td>
                                 </tr>
                             </table>
