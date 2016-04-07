@@ -299,9 +299,8 @@
                                                 <td><t t-esc="i.user_id.name"/> </td>
                                                 <td><t t-esc="i.priority"/> </td>
                                                 <td>
-                                                    <t t-foreach="i.sla_rule_ids" t-as="sla">
-                                                        <t t-esc="sla.name"/>
-                                                    </t>
+                                                    <t t-if="len(i.sla_rule_ids) > 0">YES</t>
+                                                    <t t-if="len(i.sla_rule_ids) == 0">NO</t>
                                                 </td>
                                             </tr>
                                         </t>
