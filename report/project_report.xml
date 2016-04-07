@@ -141,17 +141,17 @@
                             <table class="table table-condensed">
                                 <tr>
                                     <td class="text-center" style="vertical-align: middle;">
-                                        <h3>Stage repartition</h3>
+                                        <h3>1 - Stage repartition</h3>
                                         <img t-att-src="o.issue_per_stage" style="max-height:300px;"/>
                                     </td>
                                     <td class="text-center" style="vertical-align: middle;">
-                                        <h3>Tags repartition</h3>
+                                        <h3>2 - Tags repartition</h3>
                                         <img t-att-src="o.issue_per_tag" style="max-height:300px;"/>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="text-center" style="vertical-align: middle;">
-                                        <h3>Priority repartition</h3>
+                                        <h3>3 - Priority repartition</h3>
                                         <img t-att-src="o.issue_per_priority" style="max-height:300px;"/>
                                     </td>
                                     <td style="vertical-align: top;">
@@ -294,7 +294,15 @@
                                         <t t-foreach="o.get_issues_for_report()" t-as="i">
                                             <tr>
                                                 <td><t t-esc="i.stage_id.name"/></td>
-                                                <td><t t-esc="i.name"/></td>
+                                                <td>
+                                                    <t t-esc="i.name"/><br />
+                                                    <t t-if="i.customer_feedback">
+                                                        <b>CF:</b> <i><t t-esc="i.customer_feedback"/></i>
+                                                    </t>
+                                                    <t t-if="i.date_closed">
+                                                        (closed on <t t-esc="i.date_closed"/>)
+                                                    </t>
+                                                </td>
                                                 <td><t t-esc="i.create_date"/> </td>
                                                 <td><t t-esc="i.user_id.name"/> </td>
                                                 <td><t t-esc="i.priority"/> </td>
