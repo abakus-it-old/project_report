@@ -45,7 +45,7 @@
                                 </tr>
                                 <tr>
                                     <td>Team members</td>
-                                    <td>
+                                    <td colspan="3">
                                         <t t-foreach="o.members" t-as="member">
                                             <span t-esc="member.partner_id.name"/>, 
                                         </t>
@@ -60,7 +60,7 @@
                             </table>
                         </t>
                         <t t-if="o.display_project_times()">
-                            <h2>Project times</h2>
+                            <h2>Timeframe information</h2>
                             <table class="table">
                                 <tr>
                                     <td>Planned time</td>
@@ -87,18 +87,22 @@
                                 <td colspan="3"><span t-esc="time.strftime('%d-%m-%Y')"/></td>
                             </tr>
                             <tr>
-                                <td>Selected start date</td>
+                                <td>Selected report start date</td>
                                 <td><span t-esc="o.startdate()" t-esc-options='{"format": "d MMMM y"}'/> </td>
-                                <td>Selected end date</td>
+                                <td>Selected report end date</td>
                                 <td><span t-esc="o.enddate()" t-esc-options='{"format": "d MMMM y"}'/> </td>
                             </tr>
-                            <tr>
-                                <td>Date application</td>
-                                <td colspan="3"></td>
-                            </tr>
+                            <t t-if="o.date_application_creation()==True or o.date_application_modified()==True or o.date_application_closed()==True">
+                                <tr>
+                                    <td>Date application</td>
+                                    <t t-if="o.date_application_creation()==True"><td>Creation</td></t>
+                                    <t t-if="o.date_application_modified()==True"><td>Modification</td></t>
+                                    <t t-if="o.date_application_closed()==True"><td>Closing</td></t>
+                                </tr>
+                            </t>
                             <tr>
                                 <td>Report author</td>
-                                <td></td>
+                                <td><span t-esc="o.get_user()" /></td>
                             </tr>
                         </table>
                         <t t-if="o.display_charts()">

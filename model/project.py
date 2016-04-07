@@ -89,6 +89,9 @@ class project_project_report_methods(models.Model):
     def date_application_closed(self):
         return self.__get_project_report().date_application_closed
 
+    def get_user(self):
+        return self.env.user.partner_id.name
+
     def get_filter_issues(self):
         filter = []
 
