@@ -25,7 +25,7 @@
                         </div>
                         <t t-if="o.display_project_info()">
                             <h2>Project Infos</h2>
-                            <table class="table">
+                            <table class="table table-condensed table-striped">
                                 <tr>
                                     <td>Project usage</td>
                                     <td></td>
@@ -61,7 +61,7 @@
                         </t>
                         <t t-if="o.display_project_times()">
                             <h2>Timeframe information</h2>
-                            <table class="table">
+                            <table class="table table-condensed table-striped">
                                 <tr>
                                     <td>Planned time</td>
                                     <td><t t-esc="float(o.planned_hours/8)"/> days*</td>
@@ -81,7 +81,7 @@
                             <p>(*) One day is 8 hours long.</p>
                         </t>
                         <h2>Report Info</h2>
-                        <table class="table">
+                        <table class="table table-condensed table-striped">
                             <tr>
                                 <td>Report creation date</td>
                                 <td colspan="3"><span t-esc="time.strftime('%d-%m-%Y')"/></td>
@@ -108,7 +108,7 @@
                         <t t-if="o.display_charts() and o.display_tasks()">
                             <p style="page-break-before:always;"> </p>
                             <h2>Task charts</h2>
-                            <table>
+                            <table class="table table-condensed">
                                 <tr>
                                     <td class="text-center" style="vertical-align: middle;">
                                         <h3>1 - Stage repartition</h3>
@@ -138,7 +138,7 @@
                         <t t-if="o.display_charts() and o.display_issues()">
                             <p style="page-break-before:always;"> </p>
                             <h2>Issues charts</h2>
-                            <table>
+                            <table class="table table-condensed">
                                 <tr>
                                     <td class="text-center" style="vertical-align: middle;">
                                         <h3>Stage repartition</h3>
@@ -171,7 +171,7 @@
                             <h2>Tasks</h2>
                             <t t-if="o.tasks_type() == 'summary'">
                                 <h3>Summary</h3>
-                                <table class="table" style="border-top: 1px solid black; margin-top: 10px; margin-bottom: 10px; border-bottom: 1px solid black;">
+                                <table class="table table-condensed table-striped" style="border-top: 1px solid black; margin-top: 10px; margin-bottom: 10px; border-bottom: 1px solid black;">
                                     <thead>
                                         <tr>
                                             <th>Stage</th>
@@ -198,7 +198,7 @@
                             <t t-if="o.tasks_type() == 'detailled'">
                                 <h3>Detailled</h3>
                                 <t t-foreach="o.get_tasks_for_report()" t-as="t">
-                                    <table class="table" style="border-top: 1px double black; margin-top: 10px; margin-bottom: 10px; border-bottom: 1px double black;">
+                                    <table class="table table-condensed table-striped" style="border-top: 1px double black; margin-top: 10px; margin-bottom: 10px; border-bottom: 1px double black;">
                                         <tr>
                                             <td><b>Task name</b></td>
                                             <td colspan="2"><t t-esc="t.name"/> </td>
@@ -279,7 +279,7 @@
                             <h2>Issues</h2>
                             <t t-if="o.issues_type() == 'summary'">
                                 <h3>Summary</h3>
-                                <table class="table">
+                                <table class="table table-condensed table-striped">
                                     <thead>
                                         <tr>
                                             <th>Stage</th>
@@ -311,7 +311,7 @@
                                 <h3>Detailled</h3>
 
                                 <t t-foreach="o.get_issues_for_report()" t-as="i">
-                                    <table class="table" style="border-top: 1px double black; margin-top: 15px; margin-bottom: 15px; border-bottom: 1px double black;">
+                                    <table class="table table-condensed table-striped" style="border-top: 1px double black; margin-top: 15px; margin-bottom: 15px; border-bottom: 1px double black;">
                                         <tr>
                                             <td><b>Issue name</b></td>
                                             <td colspan="2"><t t-esc="i.name"/> </td>
