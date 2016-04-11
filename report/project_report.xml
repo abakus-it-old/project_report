@@ -12,6 +12,15 @@
             attachment='"ProjectReport-"+object.name.replace(" ","").replace("*","")+"("+time.strftime("%Y%m%d_%H%M%S")+").pdf"'
 		/>
 
+        <template id="report_project">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <!--<t t-raw="translate_doc(doc_id, doc_model, 'doc_id.partner_id.lang', 'project_report.report_project_document')"/>-->
+                    <t t-call="project_report.report_project_document" t-lang="o.partner_id.lang"/>
+                </t>
+            </t>
+        </template>
+
         <template id="report_project_document">
             <t t-name="project_report.report_project_document">
                 <t t-call="report.external_layout">
@@ -40,16 +49,8 @@
                                 </tr>
                                 <tr>
                                     <td>Project manager</td>
-                                    <td colspan="2"><span t-esc="o.manager_id.partner_id.name"/></td>
-                                    <td><span t-esc="o.manager_id.partner_id.email"/></td>
-                                </tr>
-                                <tr>
-                                    <td>Team members</td>
-                                    <td colspan="3">
-                                        <t t-foreach="o.members" t-as="member">
-                                            <span t-esc="member.partner_id.name"/>, 
-                                        </t>
-                                    </td>
+                                    <td colspan="2"><span t-esc="o.user_id.partner_id.name"/></td>
+                                    <td><span t-esc="o.user_id.partner_id.email"/></td>
                                 </tr>
                                 <tr>
                                     <td>Project start date</td>
@@ -59,6 +60,7 @@
                                 </tr>
                             </table>
                         </t>
+                        <!-- Not compatible in 9.0
                         <t t-if="o.display_project_times()">
                             <h2>Timeframe information</h2>
                             <table class="table table-condensed table-striped">
@@ -79,7 +81,7 @@
                                 </tr>
                             </table>
                             <p>(*) One day is 8 hours long.</p>
-                        </t>
+                        </t>-->
                         <h2>Report Info</h2>
                         <table class="table table-condensed table-striped">
                             <tr>
@@ -403,14 +405,6 @@
                         <p><t t-esc="o.get_comments()"/> </p>
 
                     </div>
-                </t>
-            </t>
-        </template>
-
-        <template id="report_project">
-            <t t-call="report.html_container">
-                <t t-foreach="doc_ids" t-as="doc_id">
-                    <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'project_report.report_project_document')"/>
                 </t>
             </t>
         </template>

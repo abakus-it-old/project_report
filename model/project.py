@@ -101,7 +101,7 @@ class project_project_report_methods(models.Model):
         modified = self.date_application_modified()
         closed = self.date_application_closed()
 
-        filter.append(('project_id','=',self.id))
+        filter.append(('project_id', '=', self.id))
 
         count = 0 + created + modified + closed
         if (count>=2):
@@ -109,15 +109,15 @@ class project_project_report_methods(models.Model):
 
         if created:
             filter.append('&')
-            filter.append(('create_date', '>=',startdate))
-            filter.append(('create_date','<=',enddate))
+            filter.append(('create_date', '>=', startdate))
+            filter.append(('create_date', '<=', enddate))
 
         if count == 3:
             filter.append('|') # if = 3
 
         if modified:
             filter.append('&')
-            filter.append(('write_date', '>=',startdate))
+            filter.append(('write_date', '>=', startdate))
             filter.append(('write_date','<=',enddate))
         if closed:
             filter.append('&')
@@ -144,25 +144,25 @@ class project_project_report_methods(models.Model):
         filter.append(('project_id','=',self.id))
 
         count = 0 + created + modified + closed
-        if (count>=2):
+        if (count >= 2):
             filter.append('|') # if >= 2
 
         if created:
             filter.append('&')
-            filter.append(('create_date', '>=',startdate))
-            filter.append(('create_date','<=',enddate))
+            filter.append(('create_date', '>=', startdate))
+            filter.append(('create_date', '<=', enddate))
 
         if count == 3:
             filter.append('|') # if = 3
 
         if modified:
             filter.append('&')
-            filter.append(('write_date', '>=',startdate))
-            filter.append(('write_date','<=',enddate))
+            filter.append(('write_date', '>=', startdate))
+            filter.append(('write_date', '<=', enddate))
         if closed:
             filter.append('&')
-            filter.append(('date_end', '>=',startdate))
-            filter.append(('date_end','<=',enddate))
+            filter.append(('date_end', '>=', startdate))
+            filter.append(('date_end', '<=', enddate))
         if self.tasks_stage() == 'open':
             filter.append(('stage_id.closed', '=', False))
         elif self.tasks_stage() == 'closed':
@@ -247,8 +247,8 @@ class project_project_report_methods(models.Model):
         project_issues = self.get_issues_for_report()
         if project_issues:
             for issue in project_issues:
-                if issue.categ_ids:
-                    for tag in  issue.categ_ids:
+                if issue.tag_ids:
+                    for tag in issue.tag_ids:
                         tag_name = tag.name
                         if stage_dict.has_key(tag_name):
                             stage_dict[tag_name] += 1
@@ -281,7 +281,6 @@ class project_project_report_methods(models.Model):
         dict = self._issue_per_priority()
         self.issue_per_priority = self._dictionary_to_pie_chart_url(dict)
 
-
     # TASKS CHART
     def _task_per_stage(self):
         stage_dict = {}
@@ -305,11 +304,11 @@ class project_project_report_methods(models.Model):
         stage_dict = {}
         stage_dict['None'] = 0
 
-        project_issues = self.get_tasks_for_report()
-        if project_issues:
-            for issue in project_issues:
-                if issue.categ_ids:
-                    for tag in  issue.categ_ids:
+        project_tasks = self.get_tasks_for_report()
+        if project_tasks:
+            for task in project_tasks:
+                if task.tag_ids:
+                    for tag in task.tag_ids:
                         tag_name = tag.name
                         if stage_dict.has_key(tag_name):
                             stage_dict[tag_name] += 1

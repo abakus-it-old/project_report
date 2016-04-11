@@ -45,7 +45,6 @@
                         </div>
                     </group>
                     <field name="comments" placeholder="Comments to add at the end the report ..."/>
-
                     <div style="text-align:right">
                         <button icon="gtk-cancel" special="cancel" string="Cancel"/>
                         <button name="action_print_report" string="Print" type="object" /> 
@@ -53,6 +52,5 @@
                 </form>
             </field>
         </record>
-
     </data>
 </openerp>
