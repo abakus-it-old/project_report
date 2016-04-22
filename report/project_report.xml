@@ -27,24 +27,24 @@
                             <h2>Project Infos</h2>
                             <table class="table table-condensed table-striped">
                                 <tr>
-                                    <td>Project usage</td>
+                                    <td><b>Project usage</b></td>
                                     <td></td>
                                     <t t-if="o.use_tasks"><td>Tasks</td></t>
                                     <t t-if="o.use_issues"><td>Issues</td></t>
                                 </tr>
                                 <tr>
-                                    <td>Content</td>
+                                    <td><b>Content</b></td>
                                     <td ></td>
                                     <t t-if="o.use_tasks"><td><t t-esc="len(o.tasks)"/> Tasks</td></t>
                                     <t t-if="o.use_issues"><td><t t-esc="len(o.issues)"/> Issues</td></t>
                                 </tr>
                                 <tr>
-                                    <td>Project manager</td>
+                                    <td><b>Project manager</b></td>
                                     <td colspan="2"><span t-esc="o.user_id.partner_id.name"/></td>
                                     <td><span t-esc="o.user_id.partner_id.email"/></td>
                                 </tr>
                                 <tr>
-                                    <td>Team members</td>
+                                    <td><b>Team members</b></td>
                                     <td colspan="3">
                                         <t t-foreach="o.members" t-as="member">
                                             <span t-esc="member.partner_id.name"/>, 
@@ -52,9 +52,9 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Project start date</td>
+                                    <td><b>Project start date</b></td>
                                     <td><span t-esc="o.date_start"/></td>
-                                    <td>Project end date</td>
+                                    <td><b>Project end date</b></td>
                                     <td><span t-esc="o.date"/></td>
                                 </tr>
                             </table>
@@ -63,46 +63,53 @@
                             <h2>Timeframe information</h2>
                             <table class="table table-condensed table-striped">
                                 <tr>
-                                    <td>Planned time</td>
+                                    <td><b>Planned time</b></td>
                                     <td><t t-esc="float(o.planned_hours/8)"/> days*</td>
                                     <td><t t-esc="float(o.planned_hours)"/> hours</td>
                                 </tr>
                                 <tr>
-                                    <td>Spent time</td>
+                                    <td><b>Spent time</b></td>
                                     <td><t t-esc="float(o.effective_hours/8)"/> days*</td>
                                     <td><t t-esc="float(o.effective_hours)"/> hours</td>
                                 </tr>
-                                <tr>
-                                    <td>ETC</td>
+                                <!--<tr>
+                                    <td><b>ETC</b></td>
                                     <td></td>
                                     <td></td>
                                 </tr>
+                                -->
                             </table>
                             <p>(*) One day is 8 hours long.</p>
                         </t>
                         <h2>Report Info</h2>
                         <table class="table table-condensed table-striped">
                             <tr>
-                                <td>Report creation date</td>
+                                <td><b>Report creation date</b></td>
                                 <td colspan="3"><span t-esc="time.strftime('%d-%m-%Y')"/></td>
                             </tr>
                             <tr>
-                                <td>Selected report start date</td>
+                                <td><b>Selected report start date</b></td>
                                 <td><span t-esc="o.startdate()" t-esc-options='{"format": "d MMMM y"}'/> </td>
-                                <td>Selected report end date</td>
+                                <td><b>Selected report end date</b></td>
                                 <td><span t-esc="o.enddate()" t-esc-options='{"format": "d MMMM y"}'/> </td>
                             </tr>
                             <t t-if="o.date_application_creation()==True or o.date_application_modified()==True or o.date_application_closed()==True">
                                 <tr>
-                                    <td>Date application</td>
+                                    <td><b>Date application</b></td>
                                     <t t-if="o.date_application_creation()==True"><td>Creation</td></t>
                                     <t t-if="o.date_application_modified()==True"><td>Modification</td></t>
                                     <t t-if="o.date_application_closed()==True"><td>Closing</td></t>
                                 </tr>
                             </t>
                             <tr>
-                                <td>Report author</td>
+                                <td><b>Report author</b></td>
                                 <td><span t-esc="o.get_user()" /></td>
+                                <t t-if="o.display_tasks()">
+                                    <td><span t-esc="len(o.get_tasks_for_report())" /> tasks reported</td>
+                                </t>
+                                <t t-if="o.display_issues()">
+                                    <td><span t-esc="len(o.get_issues_for_report())" /> issues reported</td>
+                                </t>
                             </tr>
                         </table>
                         <t t-if="o.display_charts() and o.display_tasks()">
