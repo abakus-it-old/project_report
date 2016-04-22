@@ -40,8 +40,8 @@
                                 </tr>
                                 <tr>
                                     <td>Project manager</td>
-                                    <td colspan="2"><span t-esc="o.manager_id.partner_id.name"/></td>
-                                    <td><span t-esc="o.manager_id.partner_id.email"/></td>
+                                    <td colspan="2"><span t-esc="o.user_id.partner_id.name"/></td>
+                                    <td><span t-esc="o.user_id.partner_id.email"/></td>
                                 </tr>
                                 <tr>
                                     <td>Team members</td>
