@@ -348,7 +348,11 @@
                                             <td><b>Stage</b></td>
                                             <td colspan="2"><t t-esc="i.stage_id.name"/> </td>
                                             <td><b>Priority</b></td>
-                                            <td><t t-esc="i.priority"/> </td>
+                                            <td>
+                                                <t t-if="i.priority=='0'">Low</t>
+                                                <t t-if="i.priority=='1'">Normal</t>
+                                                <t t-if="i.priority=='2'">High</t>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td><b>Creation date</b></td>
@@ -369,8 +373,15 @@
                                         <tr>
                                             <td><b>Total worked time</b></td>
                                             <td colspan="2"> </td>
-                                            <td></td>
-                                            <td></td>
+                                            <td><b>SLA compliance</b></td>
+                                            <td>
+                                                <t t-if="i._is_SLA_compliant()==[True]">
+                                                    OK
+                                                </t>
+                                                <t t-if="i._is_SLA_compliant()==[False]">
+                                                    /
+                                                </t>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td colspan="5">
