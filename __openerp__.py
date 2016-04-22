@@ -1,7 +1,7 @@
 {
     'name': "Project Report",
     'version': '1.2',
-    'depends': ['report','project'],
+    'depends': ['report','project', 'sla'],
     'author': "Quentin Tawry, AbAKUS it-solutions PGmbH",
     'website': "http://www.abakusitsolutions.eu",
     'category': 'project',
