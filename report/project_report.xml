@@ -305,7 +305,11 @@
                                                 </td>
                                                 <td><t t-esc="i.create_date"/> </td>
                                                 <td><t t-esc="i.user_id.name"/> </td>
-                                                <td><t t-esc="i.priority"/> </td>
+                                                <td>
+                                                    <t t-if="i.priority=='0'">Low</t>
+                                                    <t t-if="i.priority=='1'">Normal</t>
+                                                    <t t-if="i.priority=='2'">High</t>
+                                                </td>
                                                 <td>
                                                     <t t-if="i._is_SLA_compliant()==[True]">
                                                         OK
