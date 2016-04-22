@@ -384,10 +384,8 @@
                                             <td><t t-esc="i.due_date"/>% </td>
                                         </tr>
                                         <tr>
-                                            <td><b>Total worked time</b></td>
-                                            <td colspan="2"> </td>
                                             <td><b>SLA compliance</b></td>
-                                            <td>
+                                            <td colspan="3">
                                                 <t t-if="i._is_SLA_compliant()==[True]">
                                                     OK
                                                 </t>
@@ -397,6 +395,7 @@
                                             </td>
                                         </tr>
                                         <t t-if="len(i.timesheet_ids) > 0">
+                                            <t t-set="total_worked_time" t-value="0"/>
                                             <tr>
                                                 <td>
                                                     <b>Worklogs</b>
@@ -404,6 +403,7 @@
                                                 <td colspan="4">
                                                     <table width="100%" class="table" style="border-left: 2px solid black;">
                                                         <t t-foreach="i.timesheet_ids" t-as="t">
+                                                            <t t-set="total_worked_time" t-value="total_worked_time + float(t.unit_amount)"/>
                                                             <tr>
                                                                 <td><b><t t-esc="t.user_id.partner_id.name"/></b></td>
                                                                 <td><b>Date</b></td>
@@ -417,6 +417,12 @@
                                                             </tr>
                                                         </t>
                                                     </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2"><b>Total worked time</b></td>
+                                                <td>
+                                                    <span t-esc="total_worked_time" /> hours
                                                 </td>
                                             </tr>
                                         </t>
