@@ -6,7 +6,7 @@ class project_report(models.Model):
     _name = 'project.report'
 
     # ---- MODEL FIELDS
-    project_info = fields.Boolean(string="Show the project info")
+    project_info = fields.Boolean(string="Show the project info", default=True)
     project_times = fields.Boolean(string="Show the project times")
     start_date = fields.Date(string="Start date")
     end_date = fields.Date(string="End date")
@@ -14,11 +14,11 @@ class project_report(models.Model):
     date_application_modified = fields.Boolean(string="Modified tasks/issues")
     date_application_closed = fields.Boolean(string="Closed tasks/issues")
     show_chart = fields.Boolean(string="Show Chart")
-    tasks = fields.Boolean(string="Tasks")
+    tasks = fields.Boolean(string="Tasks", default=True)
     tasks_type = fields.Selection([('summary','Summary'),('detailled', 'Detailled')], string='Task presentation', default='summary')
     tasks_order = fields.Selection([('stage_id','Stage'),('name', 'Name')], string="Order by")
     tasks_stage = fields.Selection([("all", "All"), ("open", "Open"), ("closed", "Done & Cancelled")], string="Stages")
-    issues = fields.Boolean(string="Issues")
+    issues = fields.Boolean(string="Issues", default=True)
     issues_type = fields.Selection([('summary','Summary'),('detailled', 'Detailled')], string='Issue presentation', default='summary')
     issues_order = fields.Selection([('stage_id','Stage'),('name', 'Name')], string="Order by")
     issues_stage = fields.Selection([("all", "All"), ("open", "Open"), ("closed", "Done & Cancelled")], string="Stages")
@@ -29,7 +29,7 @@ class project_report_wizard(osv.osv_memory):
     _name = 'project.report.wizard'
 
     # ---- MODEL FIELDS
-    project_info = fields.Boolean(string="Show the project info")
+    project_info = fields.Boolean(string="Show the project info", default=True)
     project_times = fields.Boolean(string="Show the project times    ")
     start_date = fields.Date(string="Start date")#, default=_default_start_date)
     end_date = fields.Date(string="End date")#, default=_default_end_date)
@@ -37,11 +37,11 @@ class project_report_wizard(osv.osv_memory):
     date_application_modified = fields.Boolean(string="Modified tasks/issues")
     date_application_closed = fields.Boolean(string="Closed tasks/issues")
     show_chart = fields.Boolean(string="Show Chart")
-    tasks = fields.Boolean(string="Tasks")
+    tasks = fields.Boolean(string="Tasks", default=True)
     tasks_type = fields.Selection([('summary','Summary'),('detailled', 'Detailled')], string='Task presentation', default='summary')
     tasks_order = fields.Selection([('stage_id','Stage'),('name', 'Name')], string="Order by")
     tasks_stage = fields.Selection([("all", "All"), ("open", "Open"), ("closed", "Done & Cancelled")], string="Stages")
-    issues = fields.Boolean(string="Issues")
+    issues = fields.Boolean(string="Issues", default=True)
     issues_type = fields.Selection([('summary','Summary'),('detailled', 'Detailled')], string='Issue presentation', default='summary')
     issues_order = fields.Selection([('stage_id','Stage'),('name', 'Name')], string="Order by")
     issues_stage = fields.Selection([("all", "All"), ("open", "Open"), ("closed", "Done & Cancelled")], string="Stages")
