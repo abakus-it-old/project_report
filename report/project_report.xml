@@ -232,9 +232,11 @@
                                         </tr>
                                         <tr>
                                             <td><b>Creation date</b></td>
-                                            <td colspan="2"><t t-esc="t.create_date"/> </td>
-                                            <td><b>Deadline</b></td>
-                                            <td><t t-esc="t.date_deadline"/> </td>
+                                            <td colspan="2"><t t-esc="t.create_date" t-esc-options='{"format": "d MMMM y"}'/></td>
+                                            <t t-if="t.date_deadline">
+                                                <td><b>Deadline</b></td>
+                                                <td><t t-esc="t.date_deadline"/> </td>
+                                            </t>
                                         </tr>
                                         <tr>
                                             <td><b>Planned time</b></td>
@@ -295,29 +297,43 @@
                                 <table class="table table-condensed table-striped">
                                     <thead>
                                         <tr>
-                                            <th>Stage</th>
+                                            <th width="12%">Cr. Date</th>
                                             <th>Issue</th>
-                                            <th>Cr. Date</th>
-                                            <th>Assigned to</th>
-                                            <th>priority</th>
-                                            <th>SLA</th>
+                                            <th width="15%">Stage</th>
+                                            <th width="9%">Effort (h)</th>
+                                            <th width="9%">Priority</th>
+                                            <th width="9%">SLA</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <t t-foreach="o.get_issues_for_report()" t-as="i">
                                             <tr>
-                                                <td><t t-esc="i.stage_id.name"/></td>
+                                                <td>
+                                                    <span t-field="i.create_date" t-field-options="{&quot;format&quot;: &quot;yyyy-MM-dd&quot;}" />
+                                                </td>
                                                 <td>
                                                     <t t-esc="i.name"/><br />
                                                     <t t-if="i.customer_feedback">
                                                         <b>CF:</b> <i><t t-esc="i.customer_feedback"/></i>
                                                     </t>
+                                                </td>
+                                                <td>
                                                     <t t-if="i.date_closed">
-                                                        (closed on <t t-esc="i.date_closed"/>)
+                                                        Closed
+                                                        <br />
+                                                        (<span t-field="i.date_closed" t-field-options="{&quot;format&quot;: &quot;yyyy-MM-dd&quot;}" />)
+                                                    </t>
+                                                    <t t-if="not i.date_closed">
+                                                        <t t-esc="i.stage_id.name"/>
                                                     </t>
                                                 </td>
-                                                <td><t t-esc="i.create_date"/> </td>
-                                                <td><t t-esc="i.user_id.name"/> </td>
+                                                <td>
+                                                    <t t-set="total_worked_time" t-value="0"/>
+                                                    <t t-foreach="i.timesheet_ids" t-as="t">
+                                                        <t t-set="total_worked_time" t-value="total_worked_time + float(t.unit_amount)"/>
+                                                    </t>
+                                                    <span t-esc="round(total_worked_time, 2)" />
+                                                </td>
                                                 <td>
                                                     <t t-if="i.priority=='0'">Low</t>
                                                     <t t-if="i.priority=='1'">Normal</t>
@@ -328,7 +344,7 @@
                                                         OK
                                                     </t>
                                                     <t t-if="i._is_SLA_compliant()==[False]">
-                                                        /
+                                                        <s>OK</s>
                                                     </t>
                                                 </td>
                                             </tr>
@@ -370,8 +386,13 @@
                                         <tr>
                                             <td><b>Creation date</b></td>
                                             <td colspan="2"><t t-esc="i.create_date"/> </td>
-                                            <td><b>Deadline</b></td>
-                                            <td><t t-esc="i.date_deadline"/> </td>
+                                            <td><b>Due date</b></td>
+                                            <td>
+                                                <t t-if="i.due_date">
+                                                    <t t-esc="i.due_date"/>
+                                                </t>
+                                                <t t-if="not i.due_date">/</t>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td><b>Tags</b></td>
@@ -380,8 +401,10 @@
                                                     <t t-esc="tag.name"/>
                                                 </t>
                                             </td>
-                                            <td><b>Due date</b></td>
-                                            <td><t t-esc="i.due_date"/>% </td>
+                                            <t t-if="i.date_closed">
+                                                <td><b>Closed date</b></td>
+                                                <td><t t-esc="i.date_closed"/></td>
+                                            </t>
                                         </tr>
                                         <tr>
                                             <td><b>SLA compliance</b></td>
@@ -390,7 +413,7 @@
                                                     OK
                                                 </t>
                                                 <t t-if="i._is_SLA_compliant()==[False]">
-                                                    /
+                                                    NOT OK
                                                 </t>
                                             </td>
                                         </tr>
