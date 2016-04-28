@@ -304,6 +304,7 @@ class project_project_report_methods(models.Model):
                         stage_dict[user_name] += 1
                     else:
                         stage_dict[user_name] = 1
+        _logger.debug("TASK CHART : %s", stage_dict)
         return stage_dict
 
     @api.one

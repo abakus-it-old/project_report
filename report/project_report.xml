@@ -16,6 +16,7 @@
             <t t-name="project_report.report_project_document">
                 <t t-call="report.external_layout">
                     <div class="page">
+                        <div class="oe_structure"/>
                         <div class="row">
                             <h1 class="text-center">Project report</h1>
                             <div>
@@ -180,10 +181,11 @@
                                     </tr>
                                 </t>
                             </table>
+                            <p style="page-break-after:always;"> </p>
 
-                            <!-- Statistiques -->
+                            <!-- Stats -->
+                            <!-- Tasks charts -->
                             <t t-if="o.display_charts() and o.display_tasks()">
-                                <p style="page-break-before:always;"> </p>
                                 <h2>Task charts</h2>
                                 <table class="table table-condensed">
                                     <tr>
@@ -214,6 +216,7 @@
                                 <p style="page-break-after:always;"> </p>
                             </t>
 
+                            <!-- Issues charts -->
                             <t t-if="o.display_charts() and o.display_issues()">
                                 <h2>Issues charts</h2>
                                 <table class="table table-condensed">
@@ -242,59 +245,62 @@
                                         </td>
                                     </tr>
                                 </table>
+                                <p style="page-break-after:always;"> </p>
                             </t>
 
+                            <!-- Tasks -->
+                            <p style="page-break-after:always;"> </p>
                             <t t-if="o.display_tasks()">
-                                <p style="page-break-before:always;"> </p>
-                                <h2>Tasks</h2>
                                 <t t-if="o.tasks_type() == 'summary'">
-                                    <h3>Summary</h3>
+                                    <h2>Tasks: Summarized</h2>
                                     <table class="table table-condensed table-striped" style="border-top: 1px solid black; margin-top: 10px; margin-bottom: 10px; border-bottom: 1px solid black;">
                                         <thead>
                                             <tr>
-                                                <th>Stage</th>
+                                                <th width="12%">Cr. Date</th>
                                                 <th>Task</th>
-                                                <th>Assigned to</th>
-                                                <th>Est. time</th>
-                                                <th>Priority</th>
+                                                <th width="15%">Stage</th>
+                                                <th width="18%">Assigned to</th>
+                                                <th width="9%">Priority</th>
+                                                <th width="9%">Est. time</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <t t-foreach="o.get_tasks_for_report()" t-as="t">
                                                 <tr>
-                                                    <td><t t-esc="t.stage_id.name"/></td>
+                                                    <td><span t-field="t.create_date" t-field-options="{&quot;format&quot;: &quot;dd/MM/yyy&quot;}" /></td>
                                                     <td><t t-esc="t.name"/></td>
-                                                    <td><t t-esc="t.user_id.name"/> </td>
-                                                    <td><t t-esc="t.planned_hours"/> </td>
+                                                    <td><t t-esc="t.stage_id.name"/></td>
+                                                    <td><t t-esc="t.user_id.name"/></td>
                                                     <td>
                                                         <t t-if="t.priority=='0'">Low</t>
                                                         <t t-if="t.priority=='1'">Normal</t>
                                                         <t t-if="t.priority=='2'">High</t>
                                                     </td>
+                                                    <td><t t-esc="t.planned_hours"/></td>
                                                 </tr>
                                             </t>
                                         </tbody>
                                     </table>
-
                                 </t>
                                 <t t-if="o.tasks_type() == 'detailled'">
-                                    <h3>Detailled</h3>
+                                    <h2>Tasks: Detailled</h2>
                                     <t t-foreach="o.get_tasks_for_report()" t-as="t">
+                                        <h3><t t-esc="t.name"/></h3>
                                         <table class="table table-condensed table-striped" style="border-top: 1px double black; margin-top: 10px; margin-bottom: 10px; border-bottom: 1px double black;">
                                             <tr>
-                                                <td><b>Task name</b></td>
-                                                <td colspan="2"><t t-esc="t.name"/> </td>
-                                                <td><b>Assigned to</b></td>
-                                                <td><t t-esc="t.user_id.partner_id.name"/> </td>
+                                                <td width="20%"><b>Description:</b></td>
+                                                <td colspan="3"><t t-esc="t.description"/> </td>
                                             </tr>
                                             <tr>
-                                                <td><b>Description</b></td>
-                                                <td colspan="4"><t t-esc="t.description"/> </td>
+                                                <td width="20%"><b>Assigned to:</b></td>
+                                                <td width="25%"><t t-esc="t.user_id.partner_id.name"/> </td>
+                                                <td width="20%"><b>Reviewer</b></td>
+                                                <td><t t-esc="t.reviewer_id.partner_id.name"/> </td>
                                             </tr>
                                             <tr>
-                                                <td><b>Stage</b></td>
-                                                <td colspan="2"><t t-esc="t.stage_id.name"/> </td>
-                                                <td><b>Priority</b></td>
+                                                <td><b>Stage:</b></td>
+                                                <td><t t-esc="t.stage_id.name"/> </td>
+                                                <td><b>Priority:</b></td>
                                                 <td>
                                                     <t t-if="t.priority=='0'">Low</t>
                                                     <t t-if="t.priority=='1'">Normal</t>
@@ -302,48 +308,45 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td><b>Creation date</b></td>
-                                                <td colspan="2"><t t-esc="t.create_date" t-esc-options='{"format": "d MMMM y"}'/></td>
+                                                <td><b>Creation date: </b></td>
+                                                <td><span t-field="t.create_date" t-field-options="{&quot;format&quot;: &quot;dd/MM/yyy&quot;}" /></td>
                                                 <t t-if="t.date_deadline">
-                                                    <td><b>Deadline</b></td>
-                                                    <td><t t-esc="t.date_deadline"/> </td>
+                                                    <td><b>Deadline: </b></td>
+                                                    <td><span t-field="t.date_deadline" t-field-options="{&quot;format&quot;: &quot;dd/MM/yyy&quot;}" /> </td>
                                                 </t>
                                             </tr>
                                             <tr>
-                                                <td><b>Planned time</b></td>
-                                                <td colspan="2"><t t-esc="t.planned_hours"/> </td>
-                                                <td><b>Reviewer</b></td>
-                                                <td><t t-esc="t.reviewer_id.partner_id.name"/> </td>
+                                                <td><b>Planned time:</b></td>
+                                                <td><t t-esc="t.planned_hours"/> </td>
+                                                <td><b>Total worked time:</b></td>
+                                                <td><t t-esc="float(t.effective_hours)"/> </td>
                                             </tr>
                                             <tr>
-                                                <td><b>Tags</b></td>
-                                                <td colspan="2">
-                                                    <t t-foreach="t.categ_ids" t-as="tag">
-                                                        <t t-esc="tag.name"/>
-                                                    </t>
-                                                </td>
-                                                <td><b>Progress</b></td>
+                                                <td><b>Progress:</b></td>
                                                 <td><t t-esc="float(t.progress)"/>% </td>
-                                            </tr>
-                                            <tr>
-                                                <td><b>Total worked time</b></td>
-                                                <td colspan="2"><t t-esc="float(t.effective_hours)"/> </td>
-                                                <td></td>
-                                                <td></td>
+                                                <t t-if="len(t.categ_ids) > 0">
+                                                    <td><b>Tags:</b></td>
+                                                    <td>
+                                                        <t t-foreach="t.categ_ids" t-as="tag">
+                                                            <t t-esc="tag.name"/>
+                                                        </t>
+                                                    </td>
+                                                </t>
+                                                <t t-if="len(t.categ_ids) == 0"><td colspan="2"></td></t>
                                             </tr>
                                             <t t-if="len(t.work_ids) > 0">
                                                 <tr>
                                                     <td>
-                                                        <b>Worklogs</b>
+                                                        <b>Worklogs:</b>
                                                     </td>
-                                                    <td colspan="4">
-                                                        <table width="100%" class="table" style="border-left: 2px solid black;">
+                                                    <td colspan="3">
+                                                        <table width="99%" class="table" style="border-left: 2px solid black;">
                                                             <t t-foreach="t.work_ids" t-as="w">
                                                                 <tr>
                                                                     <td><b><t t-esc="w.user_id.partner_id.name"/></b></td>
-                                                                    <td><b>Date</b></td>
-                                                                    <td><t t-esc="w.date"/> </td>
-                                                                    <td><b>Duration</b></td>
+                                                                    <td><b>Date: </b></td>
+                                                                    <td><span t-field="w.date" t-field-options="{&quot;format&quot;: &quot;dd/MM/yyy&quot;}" /> </td>
+                                                                    <td><b>Duration: </b></td>
                                                                     <td><t t-esc="float(w.hours)"/> </td>
                                                                 </tr>
                                                                 <tr>
@@ -359,12 +362,13 @@
                                         <hr/>
                                     </t>
                                 </t>
+                                <p style="page-break-after:always;"> </p>
                             </t>
+
+                            <!-- Issues -->
                             <t t-if="o.display_issues()">
-                                <p style="page-break-before:always;"> </p>
-                                <h2>Issues</h2>
                                 <t t-if="o.issues_type() == 'summary'">
-                                    <h3>Summary</h3>
+                                    <h2>Issues: Summarized</h2>
                                     <table class="table table-condensed table-striped">
                                         <thead>
                                             <tr>
@@ -379,9 +383,7 @@
                                         <tbody>
                                             <t t-foreach="o.get_issues_for_report()" t-as="i">
                                                 <tr>
-                                                    <td>
-                                                        <span t-field="i.create_date" t-field-options="{&quot;format&quot;: &quot;yyyy-MM-dd&quot;}" />
-                                                    </td>
+                                                    <td><span t-field="i.create_date" t-field-options="{&quot;format&quot;: &quot;dd/MM/yyy&quot;}" /></td>
                                                     <td>
                                                         <t t-esc="i.name"/><br />
                                                         <t t-if="i.customer_feedback">
@@ -415,7 +417,7 @@
                                                             OK
                                                         </t>
                                                         <t t-if="i._is_SLA_compliant()==[False]">
-                                                            <s>OK</s>
+                                                            NOT OK
                                                         </t>
                                                     </td>
                                                 </tr>
@@ -424,30 +426,26 @@
                                     </table>
                                 </t>
                                 <t t-if="o.issues_type() == 'detailled'">
-                                    <h3>Detailled</h3>
-
+                                    <h2>Issues: Detailled</h2>
                                     <t t-foreach="o.get_issues_for_report()" t-as="i">
+                                        <h3><t t-esc="i.name"/></h3>
                                         <table class="table table-condensed table-striped" style="border-top: 1px double black; margin-top: 15px; margin-bottom: 15px; border-bottom: 1px double black;">
+                                            <t t-if="i.description">
+                                                <tr>
+                                                    <td width="20%"><b>Description: </b></td>
+                                                    <td colspan="3"><t t-esc="i.description"/> </td>
+                                                </tr>
+                                            </t>
                                             <tr>
-                                                <td><b>Issue name</b></td>
-                                                <td colspan="2"><t t-esc="i.name"/> </td>
-                                                <td><b>Assigned to</b></td>
+                                                <td><b>Assigned to: </b></td>
                                                 <td><t t-esc="i.user_id.partner_id.name"/> </td>
+                                                <td width="20%"><b>Contact: </b></td>
+                                                <td><t t-esc="i.partner_id.name"/> (<i><t t-esc="i.partner_id.email"/></i>)</td>
                                             </tr>
                                             <tr>
-                                                <td><b>Description</b></td>
-                                                <td colspan="4"><t t-esc="i.description"/> </td>
-                                            </tr>
-                                            <tr>
-                                                <td><b>Contact</b></td>
-                                                <td colspan="2"><t t-esc="i.partner_id.name"/> </td>
-                                                <td><b>Email</b></td>
-                                                <td><t t-esc="i.partner_id.email"/> </td>
-                                            </tr>
-                                            <tr>
-                                                <td><b>Stage</b></td>
-                                                <td colspan="2"><t t-esc="i.stage_id.name"/> </td>
-                                                <td><b>Priority</b></td>
+                                                <td><b>Stage: </b></td>
+                                                <td><t t-esc="i.stage_id.name"/> </td>
+                                                <td><b>Priority: </b></td>
                                                 <td>
                                                     <t t-if="i.priority=='0'">Low</t>
                                                     <t t-if="i.priority=='1'">Normal</t>
@@ -455,58 +453,59 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td><b>Creation date</b></td>
-                                                <td colspan="2"><t t-esc="i.create_date"/> </td>
-                                                <td><b>Due date</b></td>
+                                                <td><b>Creation date: </b></td>
+                                                <td><span t-field="i.create_date" t-field-options="{&quot;format&quot;: &quot;dd/MM/yyy&quot;}" /></td>
+                                                <td><b>Due date:</b></td>
                                                 <td>
-                                                    <t t-if="i.due_date">
-                                                        <t t-esc="i.due_date"/>
-                                                    </t>
+                                                    <t t-if="i.due_date"><span t-field="i.due_date" t-field-options="{&quot;format&quot;: &quot;dd/MM/yyy&quot;}" /></t>
                                                     <t t-if="not i.due_date">/</t>
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <td><b>Tags</b></td>
-                                                <td colspan="2">
-                                                    <t t-foreach="i.categ_ids" t-as="tag">
-                                                        <t t-esc="tag.name"/>
-                                                    </t>
-                                                </td>
-                                                <t t-if="i.date_closed">
-                                                    <td><b>Closed date</b></td>
+                                            <t t-if="i.date_closed">
+                                                <tr>
+                                                    <td colspan="2"></td>
+                                                    <td><b>Closed date: </b></td>
                                                     <td><t t-esc="i.date_closed"/></td>
-                                                </t>
-                                            </tr>
+                                                </tr>
+                                            </t>
+                                            <t t-if="len(i.categ_ids) > 0">
+                                                <tr>
+                                                    <td><b>Tags: </b></td>
+                                                    <td colspan="3">
+                                                        <t t-foreach="i.categ_ids" t-as="tag">
+                                                            <t t-esc="tag.name"/>
+                                                        </t>
+                                                    </td>
+                                                </tr>
+                                            </t>
                                             <tr>
-                                                <td><b>SLA compliance</b></td>
-                                                <td colspan="3">
-                                                    <t t-if="i._is_SLA_compliant()==[True]">
-                                                        OK
-                                                    </t>
-                                                    <t t-if="i._is_SLA_compliant()==[False]">
-                                                        NOT OK
-                                                    </t>
+                                                <td><b>SLA compliance: </b></td>
+                                                <td>
+                                                    <t t-if="i._is_SLA_compliant()==[True]">OK</t>
+                                                    <t t-if="i._is_SLA_compliant()==[False]">NOT OK</t>
                                                 </td>
+                                                <td><b>Customer feedback: </b></td>
+                                                <td><t t-esc="i.customer_feedback"/> </td>
                                             </tr>
                                             <t t-if="len(i.timesheet_ids) > 0">
                                                 <t t-set="total_worked_time" t-value="0"/>
                                                 <tr>
                                                     <td>
-                                                        <b>Worklogs</b>
+                                                        <b>Worklogs: </b>
                                                     </td>
-                                                    <td colspan="4">
-                                                        <table width="100%" class="table" style="border-left: 2px solid black;">
+                                                    <td colspan="3">
+                                                        <table width="99%" class="table" style="border-left: 2px solid black;">
                                                             <t t-foreach="i.timesheet_ids" t-as="t">
                                                                 <t t-set="total_worked_time" t-value="total_worked_time + float(t.unit_amount)"/>
                                                                 <tr>
                                                                     <td><b><t t-esc="t.user_id.partner_id.name"/></b></td>
-                                                                    <td><b>Date</b></td>
-                                                                    <td><t t-esc="t.date"/> </td>
-                                                                    <td><b>Duration</b></td>
+                                                                    <td><b>Date: </b></td>
+                                                                    <td><span t-field="t.date" t-field-options="{&quot;format&quot;: &quot;dd/MM/yyy&quot;}" /> </td>
+                                                                    <td><b>Duration: </b></td>
                                                                     <td><t t-esc="float(t.unit_amount)"/> </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td style="padding-bottom: 5px; border-bottom: 1px solid gray;"><b>Description</b></td>
+                                                                    <td style="padding-bottom: 5px; border-bottom: 1px solid gray;"><b>Description: </b></td>
                                                                     <td style="padding-bottom: 5px; border-bottom: 1px solid gray;" colspan="4"><t t-esc="t.name"/> </td>
                                                                 </tr>
                                                             </t>
@@ -520,18 +519,18 @@
                                                     </td>
                                                 </tr>
                                             </t>
-                                            <tr>
-                                                <td><b>Customer feedback</b></td>
-                                                <td colspan="4"><t t-esc="i.customer_feedback"/> </td>
-                                            </tr>
+                                            
                                         </table>
                                     </t>
                                 </t>
+                                <p style="page-break-after:always;"> </p>
                             </t>
 
-                            <h2>Comment</h2>
-                            <p><t t-esc="o.get_comments()"/> </p>
-
+                            <!-- Comments -->
+                            <t t-if="o.get_comments()">
+                                <h2>Comment</h2>
+                                <p><t t-esc="o.get_comments()"/> </p>
+                            </t>
                         </div>
                     </div>
                 </t>
