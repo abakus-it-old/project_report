@@ -10,18 +10,18 @@ class project_report(models.Model):
     project_times = fields.Boolean(string="Show the project times")
     start_date = fields.Date(string="Start date")
     end_date = fields.Date(string="End date")
-    date_application_creation = fields.Boolean(string="Created tasks/issues")
+    date_application_creation = fields.Boolean(string="Created tasks/issues", default=True)
     date_application_modified = fields.Boolean(string="Modified tasks/issues")
     date_application_closed = fields.Boolean(string="Closed tasks/issues")
     show_chart = fields.Boolean(string="Show Chart")
     tasks = fields.Boolean(string="Tasks", default=True)
     tasks_type = fields.Selection([('summary','Summary'),('detailled', 'Detailled')], string='Task presentation', default='summary')
     tasks_order = fields.Selection([('create_date', 'Creation date'), ('stage_id','Stage'),('name', 'Name')], string="Order by", default='create_date')
-    tasks_stage = fields.Selection([("all", "All"), ("open", "Open"), ("closed", "Done & Cancelled")], string="Stages")
+    tasks_stage = fields.Selection([("all", "All"), ("open", "Open"), ("closed", "Done & Cancelled")], string="Stages", default='all')
     issues = fields.Boolean(string="Issues", default=True)
     issues_type = fields.Selection([('summary','Summary'),('detailled', 'Detailled')], string='Issue presentation', default='summary')
     issues_order = fields.Selection([('create_date', 'Creation date'), ('stage_id','Stage'),('name', 'Name')], string="Order by", default='create_date')
-    issues_stage = fields.Selection([("all", "All"), ("open", "Open"), ("closed", "Done & Cancelled")], string="Stages")
+    issues_stage = fields.Selection([("all", "All"), ("open", "Open"), ("closed", "Done & Cancelled")], string="Stages", default='all')
     comments = fields.Text(string="Comments")
 
 class project_report_wizard(osv.osv_memory):
@@ -33,18 +33,18 @@ class project_report_wizard(osv.osv_memory):
     project_times = fields.Boolean(string="Show the project times    ")
     start_date = fields.Date(string="Start date")#, default=_default_start_date)
     end_date = fields.Date(string="End date")#, default=_default_end_date)
-    date_application_creation = fields.Boolean(string="Created tasks/issues")
+    date_application_creation = fields.Boolean(string="Created tasks/issues", default=True)
     date_application_modified = fields.Boolean(string="Modified tasks/issues")
     date_application_closed = fields.Boolean(string="Closed tasks/issues")
     show_chart = fields.Boolean(string="Show Chart")
     tasks = fields.Boolean(string="Tasks", default=True)
     tasks_type = fields.Selection([('summary','Summary'),('detailled', 'Detailled')], string='Task presentation', default='summary')
     tasks_order = fields.Selection([('create_date', 'Creation date'),('stage_id','Stage'),('name', 'Name')], string="Order by", default='create_date')
-    tasks_stage = fields.Selection([("all", "All"), ("open", "Open"), ("closed", "Done & Cancelled")], string="Stages")
+    tasks_stage = fields.Selection([("all", "All"), ("open", "Open"), ("closed", "Done & Cancelled")], string="Stages", default='all')
     issues = fields.Boolean(string="Issues", default=True)
     issues_type = fields.Selection([('summary','Summary'),('detailled', 'Detailled')], string='Issue presentation', default='summary')
     issues_order = fields.Selection([('create_date', 'Creation date'),('stage_id','Stage'),('name', 'Name')], string="Order by", default='create_date')
-    issues_stage = fields.Selection([("all", "All"), ("open", "Open"), ("closed", "Done & Cancelled")], string="Stages")
+    issues_stage = fields.Selection([("all", "All"), ("open", "Open"), ("closed", "Done & Cancelled")], string="Stages", default='all')
     comments = fields.Text(string="Comments")
 
     def save(self, cr, uid, ids, context=None):
@@ -79,3 +79,8 @@ class project_report_wizard(osv.osv_memory):
         self.save(cr, uid, ids, context)
         project_ids = context.get('project_ids')
         return self.pool['report'].get_action(cr, uid, project_ids, 'project_report.report_project', context=context)
+    
+    @api.onchange('start_date', 'start_date')
+    def set_creation_application_true(self):
+        if not self.date_application_creation:
+            date_application_creation = True

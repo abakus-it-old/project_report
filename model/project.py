@@ -76,10 +76,20 @@ class project_project_report_methods(models.Model):
         return self.__get_project_report().show_chart
 
     def startdate(self):
-        startdate = self.__get_project_report().start_date if self.__get_project_report().start_date else datetime.now().strftime('%y-%m-%d')
+        startdate = self.__get_project_report().start_date if self.__get_project_report().start_date else self.date_start
         return startdate
     def enddate(self):
         end_date = self.__get_project_report().end_date if self.__get_project_report().end_date else datetime.now().strftime('%y-%m-%d')
+        return end_date
+
+    # For the report
+    def get_report_startdate(self):
+        startdate = startdate = self.__get_project_report().start_date if self.__get_project_report().start_date else self.date_start
+        startdate = datetime.strptime(startdate, '%Y-%m-%d').strftime('%d/%m/%Y')
+        return startdate
+
+    def get_report_enddate(self):
+        end_date = datetime.strptime(self.__get_project_report().end_date, '%Y-%m-%d').strftime('%d/%m/%Y') if self.__get_project_report().end_date else datetime.now().strftime('%d/%m/%Y')
         return end_date
 
     def date_application_creation(self):
@@ -95,9 +105,9 @@ class project_project_report_methods(models.Model):
     def get_filter_issues(self):
         filter = []
 
-        startdate = self.startdate()# if self.startdate() else datetime.now().strftime('%y-%m%d')
-        enddate = self.enddate()# if self.enddate() else datetime.now().strftime('%y-%m%d')
-        created = self.date_application_creation()
+        startdate = self.startdate() if self.startdate() else self.date_start
+        enddate = self.enddate() if self.enddate() else self.date
+        created = True if (self.startdate() or self.enddate()) else self.date_application_creation()
         modified = self.date_application_modified()
         closed = self.date_application_closed()
 
