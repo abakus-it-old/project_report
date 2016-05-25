@@ -292,6 +292,10 @@
                                                 <td colspan="3"><t t-esc="t.description"/> </td>
                                             </tr>
                                             <tr>
+                                                <td width="20%"><b>Feedback:</b></td>
+                                                <td colspan="3"><t t-esc="t.customer_feedback"/> </td>
+                                            </tr>
+                                            <tr>
                                                 <td width="20%"><b>Assigned to:</b></td>
                                                 <td width="25%"><t t-esc="t.user_id.partner_id.name"/> </td>
                                                 <td width="20%"><b>Reviewer</b></td>
