@@ -79,7 +79,7 @@ class project_project_report_methods(models.Model):
         startdate = self.__get_project_report().start_date if self.__get_project_report().start_date else self.date_start
         return startdate
     def enddate(self):
-        end_date = self.__get_project_report().end_date if self.__get_project_report().end_date else datetime.now().strftime('%y-%m-%d')
+        end_date = self.__get_project_report().end_date if self.__get_project_report().end_date else datetime.now().strftime('%Y-%m-%d')
         return end_date
 
     # For the report
