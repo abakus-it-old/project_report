@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
 	<data>
-        <act_window id="project_report_wizard_action"
-            name="Print Project Report"
-            src_model="project.project"
-            res_model="project.report.wizard"
-            view_type="form" view_mode="form"
-            key2="client_action_multi" target="new"/>
+        <record model="ir.ui.view" id="project_project_report_button_view">
+            <field name="name">project.project.form.print.report</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project" />
+            <field name="arch" type="xml">
+                <xpath expr="(//button[@name='set_cancel'])" position="after">
+                    <button name="action_open_print_report_wizard" string="Print Report" type="object" class="oe_highlight" />
+                </xpath>
+            </field>
+        </record>
     </data>
 </openerp>
