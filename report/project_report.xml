@@ -226,8 +226,6 @@
                                         <tr>
                                             <td><b>Planned time</b></td>
                                             <td colspan="2"><t t-esc="t.planned_hours"/> </td>
-                                            <td><b>Reviewer</b></td>
-                                            <td><t t-esc="t.reviewer_id.partner_id.name"/> </td>
                                         </tr>
                                         <tr>
                                             <td><b>Tags</b></td>
